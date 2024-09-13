@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "379109501330",
+    "project_id": "myrecetario-9ed98",
+    "storage_bucket": "myrecetario-9ed98.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:379109501330:android:47eb8f91dd9088ba87394b",
+        "android_client_info": {
+          "package_name": "com.example.mi.primer.myrecetario"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqpTQ6fr6DP3rDKo2yrMxic2hL5i8nd9M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

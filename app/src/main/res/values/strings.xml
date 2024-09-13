@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">myrecetario</string>
+    <string name="User">Ingrese su usuario</string>
+    <string name="Password">Ingresa tu contraseña</string>
+    <string name="Logo">Recetario para la app</string>
+
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <!-- Creation User -->
+    <string name="name">Nombre</string>
+    <string name="lastName">Apellido</string>
+    <string name="post">Cargo</string>
+    <string name="oldYear">Edad</string>
+    <string name="numberCellPhone">Numero Telefonico</string>
+    <string name="password">Contraseña</string>
+    <string name="Create">Create</string>
+    <string name="comeBack">Volver</string>
+    
+</resources>
