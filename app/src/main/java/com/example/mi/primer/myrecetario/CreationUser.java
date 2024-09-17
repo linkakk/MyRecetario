@@ -47,7 +47,7 @@ public class CreationUser extends AppCompatActivity {
 
         // Manejar la selección de cargo (Spinner)
         String[] cargosDisponibles = new String[]{
-                "Panadero", "Respostero", "Pastelero", "Cocinero"
+                "Panadero", "Respostero", "Pastelero", "Cocinero","Administrador"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cargosDisponibles);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -193,7 +193,7 @@ public class CreationUser extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "El usuario se ha creado con éxito", Toast.LENGTH_LONG).show();
 
         // Navegar a la siguiente actividad
-        Intent intents = new Intent(this, WelcomeSession.class);
+        Intent intents = new Intent(this, MainActivity.class);
         startActivity(intents);
         finish();
     }

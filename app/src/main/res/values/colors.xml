@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
         <color name="fondoPrincipal">#DB9239</color>
     <color name="buttons">#D9AC6C</color>
+    <color name="red">#FFFF0025</color>
 </resources>
