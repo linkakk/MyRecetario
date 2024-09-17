@@ -13,9 +13,11 @@
         android:theme="@style/Theme.Myrecetario"
         tools:targetApi="31">
         <activity
+            android:name=".WelcomeSession"
+            android:exported="false" />
+        <activity
             android:name=".CreationUser"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">

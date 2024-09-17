@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnPrueba;
     EditText etLoginUser, etLoginPassword;
 
+     CheckBox checkboxRemember;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         btnPrueba = findViewById(R.id.buttonPrueba);
         etLoginUser = findViewById(R.id.etLoginUser);
         etLoginPassword = findViewById(R.id.etLoginPassword);
+        checkboxRemember = findViewById(R.id.checkboxRemember);
 
         // Configurar el listener para el botón "Next" en el campo de usuario
         etLoginUser.setOnEditorActionListener(new TextView.OnEditorActionListener() {

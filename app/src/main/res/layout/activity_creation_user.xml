@@ -24,8 +24,8 @@
     <!-- Campo de texto para el Nombre -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="294dp"
+        android:layout_height="70dp"
         android:layout_marginTop="20dp"
         android:hint="@string/name"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,19 +35,22 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etCreationUserUser"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="60dp"
             android:fontFamily="monospace"
             android:textColor="@color/black"
             android:textStyle="bold"
+            android:inputType="text"
             android:imeOptions="actionNext" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Campo de texto para el Apellido -->
+
+    <!-- Spinner para elegir el cargo (Panadero, Pastelero, etc.) -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilLoginUser"
-        android:layout_width="match_parent"
+        android:layout_width="294dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="32dp"
         android:hint="@string/lastName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,18 +59,18 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etLastNameUser"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
+            android:layout_height="60dp"
             android:fontFamily="monospace"
+            android:imeOptions="actionNext"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:imeOptions="actionNext" />
+            android:inputType="text"
+            android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Spinner para elegir el cargo (Panadero, Pastelero, etc.) -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="294dp"
+        android:layout_height="50dp"
         android:layout_marginTop="24dp"
         android:hint="@string/post"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,8 +88,8 @@
     <!-- Campo de texto para la Edad -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="294dp"
+        android:layout_height="70dp"
         android:layout_marginTop="24dp"
         android:hint="@string/oldYear"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,18 +99,19 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etOldYear"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="60dp"
             android:fontFamily="monospace"
             android:textColor="@color/black"
             android:textStyle="bold"
+            android:inputType="text"
             android:imeOptions="actionNext" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Campo de texto para el Número de Teléfono -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="294dp"
+        android:layout_height="65dp"
         android:layout_marginTop="28dp"
         android:hint="@string/numberCellPhone"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,18 +121,19 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNumberPhone"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="60dp"
             android:fontFamily="monospace"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:imeOptions="actionNext" />
+            android:imeOptions="actionNext"
+            android:inputType="text"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Campo de texto para la Contraseña -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="294dp"
+        android:layout_height="70dp"
         android:layout_marginTop="28dp"
         android:hint="@string/password"
         app:layout_constraintEnd_toEndOf="parent"
@@ -138,10 +143,11 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etCreationPassword"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="60dp"
             android:fontFamily="monospace"
             android:textColor="@color/black"
             android:textStyle="bold"
+            android:inputType="textPassword"
             android:imeOptions="actionDone" /> <!-- Termina aquí -->
     </com.google.android.material.textfield.TextInputLayout>
 
