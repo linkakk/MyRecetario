@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/icons8_b_squeda"
+        android:title="Buscar"/>
+    <item
+        android:id="@+id/navigation_products"
+        android:icon="@drawable/list_svgrepo_com"
+        android:title="Productos"/>
+    <item
+        android:id="@+id/navigation_add"
+        android:icon="@drawable/add_square_svgrepo_com"
+        android:title="Agregar"/>
+    <item
+        android:id="@+id/navigation_logout"
+        android:icon="@drawable/logout_2_svgrepo_com"
+        android:title="Salir"/>
+</menu>
