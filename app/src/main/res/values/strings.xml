@@ -22,5 +22,6 @@
     <string name="password">Contraseña</string>
     <string name="Create">Create</string>
     <string name="comeBack">Volver</string>
+    <string name="title_activity_create_receta">CreateReceta</string>
 
 </resources>
