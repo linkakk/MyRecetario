@@ -23,5 +23,15 @@
     <string name="Create">Create</string>
     <string name="comeBack">Volver</string>
     <string name="title_activity_create_receta">CreateReceta</string>
+    <!--Creation Receta-->
+    <string name="nombreReceta">Nombre de la receta</string>
+    <string name="verTodo">Ver todo</string>
+    <string name="descripcion">Descripcion</string>
+    <string name="PesoCantidadUnidades">Peso y cantidad de unidades</string>
+    <string name="descripcionMoldeo">Descripcion moldeo</string>
+    <string name="preparacion">Preparacion</string>
+    <string name="temperatura">Temperatura</string>
+    <string name="porcionado">Porcionado</string>
+    <string name="almacenamiento">Almacenamiento</string>
 
 </resources>

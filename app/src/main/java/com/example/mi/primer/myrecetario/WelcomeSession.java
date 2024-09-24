@@ -68,6 +68,8 @@ public class WelcomeSession extends AppCompatActivity {
         // Botón para agregar productos
         MenuItem addItem = bottomNavigationView.getMenu().findItem(R.id.navigation_add);
         addItem.setOnMenuItemClickListener(item -> {
+            Intent intent = new Intent(this, CreationReceta.class);
+            startActivity(intent);
             Toast.makeText(WelcomeSession.this, "Has escogido la opción: Agregar", Toast.LENGTH_SHORT).show();
             showAddProductDialog(); // Mostrar diálogo para agregar productos
             return true;
