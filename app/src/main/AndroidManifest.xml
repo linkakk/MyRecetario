@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Myrecetario"
         tools:targetApi="31">
         <activity
+            android:name=".CreaTuMasa"
+            android:exported="false" />
+        <activity
             android:name=".CreationReceta"
             android:exported="false" />
         <activity

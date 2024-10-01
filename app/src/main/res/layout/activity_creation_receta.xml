@@ -37,10 +37,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:hint="@string/nombreReceta">
+                android:hint="@string/creaTuMasa">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etCreationNombreReceta"
+                    android:id="@+id/etCreationNombreMasa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
@@ -50,6 +50,8 @@
                     android:textStyle="bold"
                     android:background="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
 
@@ -72,14 +74,133 @@
                     android:background="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
+
+
+
+
+
+
+
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:hint="@string/PesoCantidadUnidades">
+                android:hint="@string/cantidadAgua">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etCreationRecetaPorcionar"
+                    android:id="@+id/etCreationRecetaAgua"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/cantidadLevadura">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPreparacionLevadura"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/cantidadPrefermento">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPreparacionPrefermento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/cantidadHuevos">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPreparacionHuevos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/cantidadEsencia">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPreparacionEsencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/cantidadAzucar">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPreparacionAzucar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:fontFamily="monospace"
+                    android:maxLines="10"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/cantidadSal">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPreparacionSal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
@@ -94,20 +215,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:hint="@string/descripcionMoldeo">
+                android:hint="@string/cantidadMargarina">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etCreationRecetaMoldeo"
+                    android:id="@+id/etCreationRecetaPreparacionMargarina"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
                     android:imeOptions="actionNext"
-                    android:inputType="textMultiLine"
-                    android:maxLines="10"
-                    android:textColor="@color/black"
+                    android:inputType="text"
+                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:background="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/cantidadHarina">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPreparacionHarina"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -120,13 +258,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
-                    android:imeOptions="actionNext"
                     android:inputType="textMultiLine"
                     android:maxLines="10"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:background="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -159,8 +297,7 @@
                     android:background="@color/white"
                     android:fontFamily="monospace"
                     android:imeOptions="actionNext"
-                    android:inputType="textMultiLine"
-                    android:maxLines="10"                    android:textColor="@color/black"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -175,20 +312,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
-                    android:imeOptions="actionNext"
                     android:inputType="textMultiLine"
-                    android:maxLines="10"                    android:textColor="@color/black"
+                    android:maxLines="10"
+                    android:textColor="@color/black"
                     android:textStyle="bold"
                     android:background="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btnCreationUser"
+                android:id="@+id/btnCreationReceta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="40dp"
-                android:backgroundTint="#D9AC6C"
+                android:backgroundTint="@color/buttons"
                 android:text="@string/Create"
                 android:layout_gravity="center"/>
         </LinearLayout>
