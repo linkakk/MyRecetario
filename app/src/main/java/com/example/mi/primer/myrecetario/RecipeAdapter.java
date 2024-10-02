@@ -10,10 +10,10 @@ import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
-    private List<String> recipeList; // Lista de datos (ejemplo, nombres de recetas)
+    private List<RecetaMasa> recipeList; // Cambiado a RecetaMasa
 
     // Constructor para pasar la lista de recetas al adaptador
-    public RecipeAdapter(List<String> recipeList) {
+    public RecipeAdapter(List<RecetaMasa> recipeList) { // Cambiado a RecetaMasa
         this.recipeList = recipeList;
     }
 
@@ -21,15 +21,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflar el layout para cada elemento del RecyclerView
-        View view = LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_2, parent, false); // Cambiado a simple_list_item_2
         return new RecipeViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
-        // Asignar el nombre de la receta a cada elemento
-        String recipe = recipeList.get(position);
-        holder.recipeTitle.setText(recipe);
+        // Asignar la información de la receta a cada elemento
+        RecetaMasa recipe = recipeList.get(position);
+        holder.recipeTitle.setText(recipe.getNombreDeLaMasa()); // Mostrar el nombre
+        holder.recipeInfo.setText(recipe.getInformacion()); // Mostrar otra información de la receta (ajusta según tus atributos)
     }
 
     @Override
@@ -40,10 +41,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     // Clase interna que representa el ViewHolder de cada elemento
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
         public TextView recipeTitle;
+        public TextView recipeInfo; // Añadido para información adicional
 
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
-            recipeTitle = itemView.findViewById(android.R.id.text1); // Referencia al TextView
+            recipeTitle = itemView.findViewById(android.R.id.text1); // Referencia al TextView para el nombre
+            recipeInfo = itemView.findViewById(android.R.id.text2); // Referencia al TextView para la información adicional
         }
     }
 }

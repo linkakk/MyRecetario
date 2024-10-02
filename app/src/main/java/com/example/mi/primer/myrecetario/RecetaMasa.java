@@ -164,4 +164,23 @@ public class RecetaMasa {
     public void setAlmacenamientoProductoFinal(String almacenamientoProductoFinal) {
         this.almacenamientoProductoFinal = almacenamientoProductoFinal;
     }
+
+    // Método para obtener información completa de la receta
+    public String getInformacion() {
+        return "Nombre: " + nombreDeLaMasa + "\n" +
+                "Descripción: " + descripcionDeLaMasa + "\n" +
+                "Cantidad de Agua: " + cantidadDeAguaMasa + "\n" +
+                "Cantidad de Levadura: " + cantidadDeLevaduraMasa + "\n" +
+                "Cantidad de Prefermento: " + cantidadDePrefermentoMasa + "\n" +
+                "Cantidad de Huevos: " + cantidadDeHuevosMasa + "\n" +
+                "Cantidad de Esencia: " + cantidadDeEsenciaMasa + "\n" +
+                "Cantidad de Azúcar: " + cantidadDeAzucarMasa + "\n" +
+                "Cantidad de Sal: " + cantidadDeSalMasa + "\n" +
+                "Cantidad de Margarina: " + cantidadDeMargarinaMasa + "\n" +
+                "Cantidad de Harina: " + cantidadDeHarinaMasa + "\n" +
+                "Preparación: " + preparacionMasa + "\n" +
+                "Temperaturas: " + temperaturasMasas + "\n" +
+                "Porcionado: " + porcionadoMasas + "\n" +
+                "Almacenamiento: " + almacenamientoProductoFinal;
+    }
 }

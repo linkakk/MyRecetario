@@ -47,7 +47,7 @@ public class CreationReceta extends AppCompatActivity {
         btnCreate = findViewById(R.id.btnCreationReceta);
 
         // Inicializar referencia de Firebase
-        databaseRecetas = FirebaseDatabase.getInstance().getReference("recetas");
+         databaseRecetas = FirebaseDatabase.getInstance().getReference("recetas");
 
         // Funcionalidad del botón para guardar la receta
         btnCreate.setOnClickListener(new View.OnClickListener() {

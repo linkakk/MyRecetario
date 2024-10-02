@@ -7,15 +7,37 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import java.util.Arrays;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class WelcomeSession extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private RecyclerView recyclerView;
+    private RecipeAdapter recipeAdapter;
+    private TextInputEditText etSearch;
+    private TextInputLayout searchInputLayout;
+    private TextView resultadoBusqueda;
+
+    private List<RecetaMasa> recipes;  // Lista completa de recetas desde Firebase
+    private List<RecetaMasa> filteredRecipes;  // Lista de recetas filtradas
+
+    private DatabaseReference recipesRef;  // Referencia a Firebase Database
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,35 +47,56 @@ public class WelcomeSession extends AppCompatActivity {
         // Referencia al BottomNavigationView
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
+        // Referencia al TextInputLayout y TextInputEditText para búsqueda
+        searchInputLayout = findViewById(R.id.textInputLayout);
+        etSearch = findViewById(R.id.etsearchReceta);
+
+        // TextView para mostrar "Receta no encontrada"
+        resultadoBusqueda = findViewById(R.id.resultadoBusqueda);
+
         // RecyclerView para mostrar contenido
         recyclerView = findViewById(R.id.recycler_view);
-
-        // Lista de ejemplo para el RecyclerView
-        List<String> recipes = Arrays.asList("Pizza", "Pastel de Chocolate", "Empanadas", "Tacos", "Sushi");
-
-        // Configuración del RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new RecipeAdapter(recipes));
 
-        // Lógica para ocultar/mostrar la barra de navegación según el desplazamiento
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        // Inicialización de listas
+        recipes = new ArrayList<>();
+        filteredRecipes = new ArrayList<>();
+
+        // Configuración del adaptador
+        recipeAdapter = new RecipeAdapter(filteredRecipes);
+        recyclerView.setAdapter(recipeAdapter);
+
+        // Inicializar referencia a Firebase
+        recipesRef = FirebaseDatabase.getInstance().getReference("recetas");  // Asegúrate que "recipes" es la referencia correcta
+
+        // Cargar recetas desde Firebase
+        loadRecipesFromFirebase();
+
+        // Configurar la barra de navegación inferior
+        configureBottomNavigationView();
+
+        // Lógica para filtrar las recetas a medida que el usuario escribe
+        etSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0 && bottomNavigationView.isShown()) {
-                    bottomNavigationView.animate().translationY(bottomNavigationView.getHeight());
-                } else if (dy < 0) {
-                    bottomNavigationView.animate().translationY(0);
-                }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                filterRecipes(charSequence.toString());
             }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
         });
+    }
 
-        // Manejar los eventos de los botones de forma individual
-
+    // Método para configurar los botones de la barra de navegación inferior
+    private void configureBottomNavigationView() {
         // Botón de búsqueda
         MenuItem searchItem = bottomNavigationView.getMenu().findItem(R.id.navigation_search);
         searchItem.setOnMenuItemClickListener(item -> {
             Toast.makeText(WelcomeSession.this, "Has escogido la opción: Buscar", Toast.LENGTH_SHORT).show();
-            // Añadir lógica para buscar aquí
+            searchInputLayout.setVisibility(View.VISIBLE);  // Mostrar campo de búsqueda
             return true;
         });
 
@@ -61,7 +104,7 @@ public class WelcomeSession extends AppCompatActivity {
         MenuItem productsItem = bottomNavigationView.getMenu().findItem(R.id.navigation_products);
         productsItem.setOnMenuItemClickListener(item -> {
             Toast.makeText(WelcomeSession.this, "Has escogido la opción: Productos", Toast.LENGTH_SHORT).show();
-            // Añadir lógica para mostrar productos aquí
+            // Lógica para mostrar productos aquí
             return true;
         });
 
@@ -83,6 +126,67 @@ public class WelcomeSession extends AppCompatActivity {
             return true;
         });
     }
+
+    // Método para cargar recetas desde Firebase
+    // Método para cargar recetas desde Firebase
+    private void loadRecipesFromFirebase() {
+        recipesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                recipes.clear();  // Limpiar la lista existente
+                for (DataSnapshot recipeSnapshot : snapshot.getChildren()) {
+                    RecetaMasa recipe = recipeSnapshot.getValue(RecetaMasa.class);  // Cambiar a tu modelo
+                    if (recipe != null) {
+                        recipes.add(recipe);  // Agregar objeto RecetaMasa completo
+                    }
+                }
+
+                recipeAdapter.notifyDataSetChanged();  // Notificar cambios al adaptador
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(WelcomeSession.this, "Error al cargar datos de Firebase: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    // Método para filtrar las recetas según el texto ingresado
+    // Método para filtrar las recetas según el texto ingresado
+    // Método para filtrar las recetas según el texto ingresado
+    private void filterRecipes(String query) {
+        filteredRecipes.clear();
+
+        if (!query.isEmpty()) {
+            for (RecetaMasa recipe : recipes) {
+                // Asegúrate de que estás llamando a toLowerCase() en el campo String correcto
+                if (recipe.getNombreDeLaMasa() != null &&
+                        recipe.getNombreDeLaMasa().toLowerCase().contains(query.toLowerCase())) {
+                    filteredRecipes.add(recipe); // Agregar objeto RecetaMasa completo
+                }
+            }
+
+            // Si no hay coincidencias, mostrar el mensaje "Receta no encontrada"
+            if (filteredRecipes.isEmpty()) {
+                resultadoBusqueda.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            } else {
+                resultadoBusqueda.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            }
+        } else {
+            // Si no hay texto en el campo de búsqueda, mostrar todas las recetas
+            filteredRecipes.addAll(recipes);
+            resultadoBusqueda.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+
+        // Notificar al adaptador que los datos han cambiado
+        recipeAdapter.notifyDataSetChanged();
+    }
+
+
 
     // Método para mostrar diálogo y agregar productos
     private void showAddProductDialog() {
