@@ -12,6 +12,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference.CompletionListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CreationReceta extends AppCompatActivity {
 
     // Declaración de los campos
@@ -47,7 +50,7 @@ public class CreationReceta extends AppCompatActivity {
         btnCreate = findViewById(R.id.btnCreationReceta);
 
         // Inicializar referencia de Firebase
-         databaseRecetas = FirebaseDatabase.getInstance().getReference("recetas");
+        databaseRecetas = FirebaseDatabase.getInstance().getReference("recetas");
 
         // Funcionalidad del botón para guardar la receta
         btnCreate.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +62,7 @@ public class CreationReceta extends AppCompatActivity {
     }
 
     private void guardarReceta() {
-        // Obtener valores de los campos, si están vacíos, dejar el valor como una cadena vacía
+        // Obtener valores de los campos
         String nombre = nombreDeLaMasa.getText().toString().trim();
         String descripcion = descripcionDeLaMasa.getText().toString().trim();
         String agua = cantidadDeAguaMasa.getText().toString().trim();
@@ -77,13 +80,40 @@ public class CreationReceta extends AppCompatActivity {
         String almacenamiento = AlmacemamientoProductoFinal.getText().toString().trim();
 
         // Validar que los campos esenciales no estén vacíos
-        if (nombre.isEmpty() || descripcion.isEmpty()) {
-            Toast.makeText(this, "El nombre y la descripción son obligatorios", Toast.LENGTH_LONG).show();
+        if (nombre.isEmpty() || descripcion.isEmpty() || agua.isEmpty()) {
+            Toast.makeText(this, "El nombre, la descripción y la cantidad de agua son obligatorios", Toast.LENGTH_LONG).show();
             return;
         }
 
-        // Crear un objeto de RecetaMasa, incluso si algunos campos están vacíos
-        RecetaMasa recetaMasa = new RecetaMasa(nombre, descripcion, agua, levadura, prefermento, huevos, esencia, azucar, sal, margarina, harina, preparacion, temperatura, porcionado, almacenamiento);
+        // Convertir la cantidad de agua a un valor numérico
+        double cantidadAgua = Double.parseDouble(agua);
+
+        // Usar la cantidad de agua como la cantidad original
+        int cantidadOriginal = (int) cantidadAgua;  // Puedes ajustarlo si deseas mantener decimales
+
+        // Crear una lista de ingredientes ajustados
+        List<Ingredientes.Ingrediente> ingredientes = new ArrayList<>();
+        ingredientes.add(new Ingredientes.Ingrediente("Agua", cantidadAgua)); // El agua se mantiene como está
+        ingredientes.add(new Ingredientes.Ingrediente("Levadura", Double.parseDouble(levadura) * cantidadOriginal));
+        ingredientes.add(new Ingredientes.Ingrediente("Prefermento", Double.parseDouble(prefermento) * cantidadOriginal));
+        ingredientes.add(new Ingredientes.Ingrediente("Huevos", Double.parseDouble(huevos) * cantidadOriginal));
+        ingredientes.add(new Ingredientes.Ingrediente("Esencia", Double.parseDouble(esencia) * cantidadOriginal));
+        ingredientes.add(new Ingredientes.Ingrediente("Azúcar", Double.parseDouble(azucar) * cantidadOriginal));
+        ingredientes.add(new Ingredientes.Ingrediente("Sal", Double.parseDouble(sal) * cantidadOriginal));
+        ingredientes.add(new Ingredientes.Ingrediente("Margarina", Double.parseDouble(margarina) * cantidadOriginal));
+        ingredientes.add(new Ingredientes.Ingrediente("Harina", Double.parseDouble(harina) * cantidadOriginal));
+
+        // Crear un objeto de RecetaMasa con la lista de ingredientes ajustada
+        RecetaMasa recetaMasa = new RecetaMasa(
+                nombre,
+                descripcion,
+                ingredientes,
+                preparacion,
+                temperatura,
+                porcionado,
+                almacenamiento,
+                cantidadOriginal
+        );
 
         // Guardar en Firebase bajo un ID único
         String recetaId = databaseRecetas.push().getKey();

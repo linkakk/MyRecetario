@@ -11,6 +11,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +34,8 @@ public class WelcomeSession extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
     private TextInputEditText etSearch;
+    private Spinner spinnerAmount;
+    private String selectPost;
     private TextInputLayout searchInputLayout;
     private TextView resultadoBusqueda;
 
@@ -62,12 +67,19 @@ public class WelcomeSession extends AppCompatActivity {
         recipes = new ArrayList<>();
         filteredRecipes = new ArrayList<>();
 
-        // Configuración del adaptador
+        // Inicializar el spinner
+        spinnerAmount = findViewById(R.id.spinnerAmount);
+        String[] cantidades = new String[]{"8", "12", "15", "18", "20"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cantidades);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAmount.setAdapter(adapter);
+
+        // Configuración del adaptador del RecyclerView
         recipeAdapter = new RecipeAdapter(filteredRecipes);
         recyclerView.setAdapter(recipeAdapter);
 
         // Inicializar referencia a Firebase
-        recipesRef = FirebaseDatabase.getInstance().getReference("recetas");  // Asegúrate que "recipes" es la referencia correcta
+        recipesRef = FirebaseDatabase.getInstance().getReference("recetas");
 
         // Cargar recetas desde Firebase
         loadRecipesFromFirebase();
@@ -87,6 +99,19 @@ public class WelcomeSession extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {}
+        });
+
+        // Manejar la selección del spinner para ajustar ingredientes
+        spinnerAmount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectPost = parent.getItemAtPosition(position).toString();
+                int cantidadSeleccionada = Integer.parseInt(selectPost);
+                ajustarIngredientes(cantidadSeleccionada);  // Método para ajustar la receta según la selección
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
 
@@ -128,7 +153,6 @@ public class WelcomeSession extends AppCompatActivity {
     }
 
     // Método para cargar recetas desde Firebase
-    // Método para cargar recetas desde Firebase
     private void loadRecipesFromFirebase() {
         recipesRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -140,7 +164,6 @@ public class WelcomeSession extends AppCompatActivity {
                         recipes.add(recipe);  // Agregar objeto RecetaMasa completo
                     }
                 }
-
                 recipeAdapter.notifyDataSetChanged();  // Notificar cambios al adaptador
             }
 
@@ -151,23 +174,20 @@ public class WelcomeSession extends AppCompatActivity {
         });
     }
 
-
-    // Método para filtrar las recetas según el texto ingresado
-    // Método para filtrar las recetas según el texto ingresado
     // Método para filtrar las recetas según el texto ingresado
     private void filterRecipes(String query) {
         filteredRecipes.clear();
 
+        // Si el texto de búsqueda no está vacío
         if (!query.isEmpty()) {
             for (RecetaMasa recipe : recipes) {
-                // Asegúrate de que estás llamando a toLowerCase() en el campo String correcto
-                if (recipe.getNombreDeLaMasa() != null &&
+                if (recipe != null && recipe.getNombreDeLaMasa() != null &&
                         recipe.getNombreDeLaMasa().toLowerCase().contains(query.toLowerCase())) {
-                    filteredRecipes.add(recipe); // Agregar objeto RecetaMasa completo
+                    filteredRecipes.add(recipe);
                 }
             }
 
-            // Si no hay coincidencias, mostrar el mensaje "Receta no encontrada"
+            // Mostrar mensaje si no se encontraron recetas
             if (filteredRecipes.isEmpty()) {
                 resultadoBusqueda.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
@@ -176,22 +196,50 @@ public class WelcomeSession extends AppCompatActivity {
                 recyclerView.setVisibility(View.VISIBLE);
             }
         } else {
-            // Si no hay texto en el campo de búsqueda, mostrar todas las recetas
+            // Si el campo de búsqueda está vacío, mostrar todas las recetas
             filteredRecipes.addAll(recipes);
             resultadoBusqueda.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
         }
 
-        // Notificar al adaptador que los datos han cambiado
         recipeAdapter.notifyDataSetChanged();
     }
 
+    // Método para ajustar los ingredientes según la cantidad seleccionada
+    private void ajustarIngredientes(int cantidadSeleccionada) {
+        // Comparar el valor del spinner con la cantidad original de la receta
+        for (RecetaMasa recipe : filteredRecipes) {
+            if (recipe != null) {
+                int cantidadOriginal = recipe.getCantidadOriginal();  // Cantidad original de la receta
+                if (cantidadSeleccionada == cantidadOriginal) {
+                    // No es necesario ajustar si la cantidad es la misma
+                    continue;
+                }
+                double factor = (double) cantidadSeleccionada / cantidadOriginal;
+
+                // Ajusta los ingredientes según el factor, verificando si es agua
+                for (Ingredientes.Ingrediente ingrediente : recipe.getIngredientes()) {
+                    if (ingrediente.getNombre().equalsIgnoreCase("agua")) {
+                        // Verificar si la cantidad de agua es la correcta
+                        if (ingrediente.getCantidad() * factor == cantidadSeleccionada) {
+                            // Ajuste correcto, continuar
+                            ingrediente.setCantidad(ingrediente.getCantidad() * factor);
+                        }
+                    } else {
+                        // Ajustar otros ingredientes
+                        ingrediente.setCantidad(ingrediente.getCantidad() * factor);
+                    }
+                }
+            }
+        }
+
+        recipeAdapter.notifyDataSetChanged();  // Actualiza el RecyclerView
+    }
 
 
     // Método para mostrar diálogo y agregar productos
     private void showAddProductDialog() {
         Toast.makeText(this, "Diálogo para agregar productos", Toast.LENGTH_SHORT).show();
-        // Aquí puedes mostrar un diálogo personalizado
     }
 
     // Método para cerrar sesión
@@ -199,6 +247,6 @@ public class WelcomeSession extends AppCompatActivity {
         Toast.makeText(this, "Cerrando sesión...", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        finish(); // Finaliza la actividad actual
+        finish();
     }
 }

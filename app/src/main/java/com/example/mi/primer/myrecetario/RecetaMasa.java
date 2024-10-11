@@ -1,50 +1,36 @@
 package com.example.mi.primer.myrecetario;
 
+import java.util.List;
+
 public class RecetaMasa {
     private String nombreDeLaMasa;
     private String descripcionDeLaMasa;
-    private String cantidadDeAguaMasa;
-    private String cantidadDeLevaduraMasa;
-    private String cantidadDePrefermentoMasa;
-    private String cantidadDeHuevosMasa;
-    private String cantidadDeEsenciaMasa;
-    private String cantidadDeAzucarMasa;
-    private String cantidadDeSalMasa;
-    private String cantidadDeMargarinaMasa;
-    private String cantidadDeHarinaMasa;
+    private List<Ingredientes.Ingrediente> ingredientes;  // Lista de ingredientes
     private String preparacionMasa;
     private String temperaturasMasas;
     private String porcionadoMasas;
     private String almacenamientoProductoFinal;
+    private int cantidadOriginal;  // Cantidad base para la receta
 
     // Constructor vacío necesario para Firebase
     public RecetaMasa() {
     }
 
     // Constructor con parámetros
-    public RecetaMasa(String nombreDeLaMasa, String descripcionDeLaMasa, String cantidadDeAguaMasa, String cantidadDeLevaduraMasa,
-                      String cantidadDePrefermentoMasa, String cantidadDeHuevosMasa, String cantidadDeEsenciaMasa,
-                      String cantidadDeAzucarMasa, String cantidadDeSalMasa, String cantidadDeMargarinaMasa,
-                      String cantidadDeHarinaMasa, String preparacionMasa, String temperaturasMasas,
-                      String porcionadoMasas, String almacenamientoProductoFinal) {
+    public RecetaMasa(String nombreDeLaMasa, String descripcionDeLaMasa, List<Ingredientes.Ingrediente> ingredientes,
+                      String preparacionMasa, String temperaturasMasas, String porcionadoMasas,
+                      String almacenamientoProductoFinal, int cantidadOriginal) {
         this.nombreDeLaMasa = nombreDeLaMasa;
         this.descripcionDeLaMasa = descripcionDeLaMasa;
-        this.cantidadDeAguaMasa = cantidadDeAguaMasa;
-        this.cantidadDeLevaduraMasa = cantidadDeLevaduraMasa;
-        this.cantidadDePrefermentoMasa = cantidadDePrefermentoMasa;
-        this.cantidadDeHuevosMasa = cantidadDeHuevosMasa;
-        this.cantidadDeEsenciaMasa = cantidadDeEsenciaMasa;
-        this.cantidadDeAzucarMasa = cantidadDeAzucarMasa;
-        this.cantidadDeSalMasa = cantidadDeSalMasa;
-        this.cantidadDeMargarinaMasa = cantidadDeMargarinaMasa;
-        this.cantidadDeHarinaMasa = cantidadDeHarinaMasa;
+        this.ingredientes = ingredientes;
         this.preparacionMasa = preparacionMasa;
         this.temperaturasMasas = temperaturasMasas;
         this.porcionadoMasas = porcionadoMasas;
         this.almacenamientoProductoFinal = almacenamientoProductoFinal;
+        this.cantidadOriginal = cantidadOriginal;
     }
 
-    // Getters y setters para cada campo
+    // Getters y setters
     public String getNombreDeLaMasa() {
         return nombreDeLaMasa;
     }
@@ -61,76 +47,12 @@ public class RecetaMasa {
         this.descripcionDeLaMasa = descripcionDeLaMasa;
     }
 
-    public String getCantidadDeAguaMasa() {
-        return cantidadDeAguaMasa;
+    public List<Ingredientes.Ingrediente> getIngredientes() {
+        return ingredientes;
     }
 
-    public void setCantidadDeAguaMasa(String cantidadDeAguaMasa) {
-        this.cantidadDeAguaMasa = cantidadDeAguaMasa;
-    }
-
-    public String getCantidadDeLevaduraMasa() {
-        return cantidadDeLevaduraMasa;
-    }
-
-    public void setCantidadDeLevaduraMasa(String cantidadDeLevaduraMasa) {
-        this.cantidadDeLevaduraMasa = cantidadDeLevaduraMasa;
-    }
-
-    public String getCantidadDePrefermentoMasa() {
-        return cantidadDePrefermentoMasa;
-    }
-
-    public void setCantidadDePrefermentoMasa(String cantidadDePrefermentoMasa) {
-        this.cantidadDePrefermentoMasa = cantidadDePrefermentoMasa;
-    }
-
-    public String getCantidadDeHuevosMasa() {
-        return cantidadDeHuevosMasa;
-    }
-
-    public void setCantidadDeHuevosMasa(String cantidadDeHuevosMasa) {
-        this.cantidadDeHuevosMasa = cantidadDeHuevosMasa;
-    }
-
-    public String getCantidadDeEsenciaMasa() {
-        return cantidadDeEsenciaMasa;
-    }
-
-    public void setCantidadDeEsenciaMasa(String cantidadDeEsenciaMasa) {
-        this.cantidadDeEsenciaMasa = cantidadDeEsenciaMasa;
-    }
-
-    public String getCantidadDeAzucarMasa() {
-        return cantidadDeAzucarMasa;
-    }
-
-    public void setCantidadDeAzucarMasa(String cantidadDeAzucarMasa) {
-        this.cantidadDeAzucarMasa = cantidadDeAzucarMasa;
-    }
-
-    public String getCantidadDeSalMasa() {
-        return cantidadDeSalMasa;
-    }
-
-    public void setCantidadDeSalMasa(String cantidadDeSalMasa) {
-        this.cantidadDeSalMasa = cantidadDeSalMasa;
-    }
-
-    public String getCantidadDeMargarinaMasa() {
-        return cantidadDeMargarinaMasa;
-    }
-
-    public void setCantidadDeMargarinaMasa(String cantidadDeMargarinaMasa) {
-        this.cantidadDeMargarinaMasa = cantidadDeMargarinaMasa;
-    }
-
-    public String getCantidadDeHarinaMasa() {
-        return cantidadDeHarinaMasa;
-    }
-
-    public void setCantidadDeHarinaMasa(String cantidadDeHarinaMasa) {
-        this.cantidadDeHarinaMasa = cantidadDeHarinaMasa;
+    public void setIngredientes(List<Ingredientes.Ingrediente> ingredientes) {
+        this.ingredientes = ingredientes;
     }
 
     public String getPreparacionMasa() {
@@ -165,22 +87,37 @@ public class RecetaMasa {
         this.almacenamientoProductoFinal = almacenamientoProductoFinal;
     }
 
+    public int getCantidadOriginal() {
+        return cantidadOriginal;
+    }
+
+    public void setCantidadOriginal(int cantidadOriginal) {
+        this.cantidadOriginal = cantidadOriginal;
+    }
+
+    // Método para ajustar las cantidades de los ingredientes
+    public void ajustarIngredientes(int cantidadSeleccionada) {
+        double factor = (double) cantidadSeleccionada / cantidadOriginal;
+        for (Ingredientes.Ingrediente ingrediente : ingredientes) {
+            ingrediente.setCantidad(ingrediente.getCantidad() * factor);
+        }
+    }
+
     // Método para obtener información completa de la receta
     public String getInformacion() {
-        return "Nombre: " + nombreDeLaMasa + "\n" +
-                "Descripción: " + descripcionDeLaMasa + "\n" +
-                "Cantidad de Agua: " + cantidadDeAguaMasa + "\n" +
-                "Cantidad de Levadura: " + cantidadDeLevaduraMasa + "\n" +
-                "Cantidad de Prefermento: " + cantidadDePrefermentoMasa + "\n" +
-                "Cantidad de Huevos: " + cantidadDeHuevosMasa + "\n" +
-                "Cantidad de Esencia: " + cantidadDeEsenciaMasa + "\n" +
-                "Cantidad de Azúcar: " + cantidadDeAzucarMasa + "\n" +
-                "Cantidad de Sal: " + cantidadDeSalMasa + "\n" +
-                "Cantidad de Margarina: " + cantidadDeMargarinaMasa + "\n" +
-                "Cantidad de Harina: " + cantidadDeHarinaMasa + "\n" +
-                "Preparación: " + preparacionMasa + "\n" +
-                "Temperaturas: " + temperaturasMasas + "\n" +
-                "Porcionado: " + porcionadoMasas + "\n" +
-                "Almacenamiento: " + almacenamientoProductoFinal;
+        StringBuilder info = new StringBuilder();
+        info.append("Nombre: ").append(nombreDeLaMasa).append("\n")
+                .append("Descripción: ").append(descripcionDeLaMasa).append("\n");
+
+        for (Ingredientes.Ingrediente ingrediente : ingredientes) {
+            info.append(ingrediente.getNombre()).append(": ").append(ingrediente.getCantidad()).append("\n");
+        }
+
+        info.append("Preparación: ").append(preparacionMasa).append("\n")
+                .append("Temperaturas: ").append(temperaturasMasas).append("\n")
+                .append("Porcionado: ").append(porcionadoMasas).append("\n")
+                .append("Almacenamiento: ").append(almacenamientoProductoFinal);
+
+        return info.toString();
     }
 }

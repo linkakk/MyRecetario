@@ -30,6 +30,25 @@
             android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout3"
+        android:layout_width="294dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="180dp"
+        android:hint="@string/post"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/tilLoginUser">
+
+        <Spinner
+            android:id="@+id/spinnerAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/amount"
+            android:layout_marginTop="220dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
     <!-- ScrollView para mostrar resultados -->
     <ScrollView
         android:layout_width="match_parent"

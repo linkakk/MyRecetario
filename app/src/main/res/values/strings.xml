@@ -53,6 +53,7 @@
 
     <string name="search">Busca tu receta</string>
     <string name="Info">Informacion no encontrada</string>
+    <string name="amount">Elija la cantidad que preparara</string>
     <!-- para usar despues
 
      <TextView
