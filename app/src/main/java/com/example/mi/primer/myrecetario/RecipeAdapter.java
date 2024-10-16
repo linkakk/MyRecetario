@@ -5,48 +5,65 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
-    private List<RecetaMasa> recipeList; // Cambiado a RecetaMasa
+    private List<RecetaMasa> recipeList;
+    private double cantidadSeleccionada; // Cantidad seleccionada desde el spinner
 
-    // Constructor para pasar la lista de recetas al adaptador
-    public RecipeAdapter(List<RecetaMasa> recipeList) { // Cambiado a RecetaMasa
+    // Constructor modificado para incluir la cantidad seleccionada
+    public RecipeAdapter(List<RecetaMasa> recipeList, double cantidadSeleccionada) {
         this.recipeList = recipeList;
+        this.cantidadSeleccionada = cantidadSeleccionada; // Guardar la cantidad seleccionada
     }
 
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflar el layout para cada elemento del RecyclerView
-        View view = LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_2, parent, false); // Cambiado a simple_list_item_2
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe, parent, false);
         return new RecipeViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
-        // Asignar la información de la receta a cada elemento
+        // Obtener la receta actual
         RecetaMasa recipe = recipeList.get(position);
-        holder.recipeTitle.setText(recipe.getNombreDeLaMasa()); // Mostrar el nombre
-        holder.recipeInfo.setText(recipe.getInformacion()); // Mostrar otra información de la receta (ajusta según tus atributos)
+
+        // Mostrar el nombre de la receta
+        holder.recipeTitle.setText(recipe.getNombreDeLaMasa());
+
+        // Mostrar información adicional de la receta
+        holder.recipeInfo.setText(recipe.getInformacion());
+
+        // Crear el adapter para los ingredientes ajustados usando la cantidad seleccionada
+        IngredientAdapter ingredientAdapter = new IngredientAdapter(recipe.getIngredientesAjustados(cantidadSeleccionada));
+
+        // Configurar el RecyclerView de ingredientes
+        holder.recyclerViewIngredients.setAdapter(ingredientAdapter);
+        holder.recyclerViewIngredients.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext()));
     }
 
     @Override
     public int getItemCount() {
-        return recipeList.size(); // Número total de elementos en la lista
+        return recipeList.size();
     }
 
-    // Clase interna que representa el ViewHolder de cada elemento
+    // Clase ViewHolder que gestiona las vistas para cada receta
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
         public TextView recipeTitle;
-        public TextView recipeInfo; // Añadido para información adicional
+        public TextView recipeInfo;
+        public RecyclerView recyclerViewIngredients; // Para mostrar los ingredientes
 
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
-            recipeTitle = itemView.findViewById(android.R.id.text1); // Referencia al TextView para el nombre
-            recipeInfo = itemView.findViewById(android.R.id.text2); // Referencia al TextView para la información adicional
+            // Inicializar las vistas
+            recipeTitle = itemView.findViewById(R.id.text1);
+            recipeInfo = itemView.findViewById(R.id.text2);
+            recyclerViewIngredients = itemView.findViewById(R.id.ingredientsRecyclerView);
         }
     }
 }

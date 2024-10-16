@@ -85,53 +85,70 @@ public class CreationReceta extends AppCompatActivity {
             return;
         }
 
-        // Convertir la cantidad de agua a un valor numérico
+        // Convertir las cantidades a valores numéricos
         double cantidadAgua = Double.parseDouble(agua);
+        double cantidadLevadura = Double.parseDouble(levadura);
+        double cantidadPrefermento = Double.parseDouble(prefermento);
+        double cantidadHuevos = Double.parseDouble(huevos);
+        double cantidadEsencia = Double.parseDouble(esencia);
+        double cantidadAzucar = Double.parseDouble(azucar);
+        double cantidadSal = Double.parseDouble(sal);
+        double cantidadMargarina = Double.parseDouble(margarina);
+        double cantidadHarina = Double.parseDouble(harina);
+
+        // Crear una lista de ingredientes
+        List<Ingredientes.Ingrediente> listaIngredientes = new ArrayList<>();
+
+        // Añadir ingredientes a la lista
+        listaIngredientes.add(new Ingredientes.Ingrediente("Agua", cantidadAgua));
+        listaIngredientes.add(new Ingredientes.Ingrediente("Levadura", cantidadLevadura));
+        listaIngredientes.add(new Ingredientes.Ingrediente("Prefermento", cantidadPrefermento));
+        listaIngredientes.add(new Ingredientes.Ingrediente("Huevos", cantidadHuevos));
+        listaIngredientes.add(new Ingredientes.Ingrediente("Esencia", cantidadEsencia));
+        listaIngredientes.add(new Ingredientes.Ingrediente("Azúcar", cantidadAzucar));
+        listaIngredientes.add(new Ingredientes.Ingrediente("Sal", cantidadSal));
+        listaIngredientes.add(new Ingredientes.Ingrediente("Margarina", cantidadMargarina));
+        listaIngredientes.add(new Ingredientes.Ingrediente("Harina", cantidadHarina));
 
         // Usar la cantidad de agua como la cantidad original
-        int cantidadOriginal = (int) cantidadAgua;  // Puedes ajustarlo si deseas mantener decimales
+        int cantidadOriginal = (int) cantidadAgua; // Ajusta según sea necesario
 
-        // Crear una lista de ingredientes ajustados
-        List<Ingredientes.Ingrediente> ingredientes = new ArrayList<>();
-        ingredientes.add(new Ingredientes.Ingrediente("Agua", cantidadAgua)); // El agua se mantiene como está
-        ingredientes.add(new Ingredientes.Ingrediente("Levadura", Double.parseDouble(levadura) * cantidadOriginal));
-        ingredientes.add(new Ingredientes.Ingrediente("Prefermento", Double.parseDouble(prefermento) * cantidadOriginal));
-        ingredientes.add(new Ingredientes.Ingrediente("Huevos", Double.parseDouble(huevos) * cantidadOriginal));
-        ingredientes.add(new Ingredientes.Ingrediente("Esencia", Double.parseDouble(esencia) * cantidadOriginal));
-        ingredientes.add(new Ingredientes.Ingrediente("Azúcar", Double.parseDouble(azucar) * cantidadOriginal));
-        ingredientes.add(new Ingredientes.Ingrediente("Sal", Double.parseDouble(sal) * cantidadOriginal));
-        ingredientes.add(new Ingredientes.Ingrediente("Margarina", Double.parseDouble(margarina) * cantidadOriginal));
-        ingredientes.add(new Ingredientes.Ingrediente("Harina", Double.parseDouble(harina) * cantidadOriginal));
-
-        // Crear un objeto de RecetaMasa con la lista de ingredientes ajustada
+        // Crear un objeto de RecetaMasa
         RecetaMasa recetaMasa = new RecetaMasa(
                 nombre,
                 descripcion,
-                ingredientes,
+                cantidadAgua,
+                cantidadLevadura,
+                cantidadPrefermento,
+                cantidadHuevos,
+                cantidadEsencia,
+                cantidadAzucar,
+                cantidadSal,
+                cantidadMargarina,
+                cantidadHarina,
                 preparacion,
                 temperatura,
                 porcionado,
                 almacenamiento,
-                cantidadOriginal
+                cantidadOriginal,
+                listaIngredientes // Pasar la lista de ingredientes
         );
 
-        // Guardar en Firebase bajo un ID único
-        String recetaId = databaseRecetas.push().getKey();
-        databaseRecetas.child(recetaId).setValue(recetaMasa, new CompletionListener() {
-            @Override
-            public void onComplete(DatabaseError error, DatabaseReference ref) {
-                if (error == null) {
-                    // Si no hay error, mostrar Toast de éxito
-                    Toast.makeText(CreationReceta.this, "La información se ha guardado correctamente", Toast.LENGTH_SHORT).show();
-                    // Redirigir a WelcomeSession
-                    Intent intent = new Intent(CreationReceta.this, WelcomeSession.class);
-                    startActivity(intent);
-                    finish(); // Finalizar la actividad actual
-                } else {
-                    // Si hay un error, mostrar Toast de error
-                    Toast.makeText(CreationReceta.this, "Ups, no se guardó la información. Intenta nuevamente.", Toast.LENGTH_SHORT).show();
-                }
+        // Guardar la receta en Firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("recetas");
+
+        myRef.push().setValue(recetaMasa).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(this, "Receta guardada correctamente", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Error al guardar la receta", Toast.LENGTH_LONG).show();
             }
         });
     }
+
+
+
 }
+
+
