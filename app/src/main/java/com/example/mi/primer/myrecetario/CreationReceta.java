@@ -1,7 +1,6 @@
 package com.example.mi.primer.myrecetario;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,8 +8,6 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference.CompletionListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,8 +77,8 @@ public class CreationReceta extends AppCompatActivity {
         String almacenamiento = AlmacemamientoProductoFinal.getText().toString().trim();
 
         // Validar que los campos esenciales no estén vacíos
-        if (nombre.isEmpty() || descripcion.isEmpty() || agua.isEmpty()) {
-            Toast.makeText(this, "El nombre, la descripción y la cantidad de agua son obligatorios", Toast.LENGTH_LONG).show();
+        if (nombre.isEmpty()) {
+            Toast.makeText(this, "El nombre es obligatorio", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -113,6 +110,7 @@ public class CreationReceta extends AppCompatActivity {
         // Usar la cantidad de agua como la cantidad original
         int cantidadOriginal = (int) cantidadAgua; // Ajusta según sea necesario
 
+
         // Crear un objeto de RecetaMasa
         RecetaMasa recetaMasa = new RecetaMasa(
                 nombre,
@@ -135,10 +133,7 @@ public class CreationReceta extends AppCompatActivity {
         );
 
         // Guardar la receta en Firebase
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("recetas");
-
-        myRef.push().setValue(recetaMasa).addOnCompleteListener(task -> {
+        databaseRecetas.push().setValue(recetaMasa).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(this, "Receta guardada correctamente", Toast.LENGTH_LONG).show();
             } else {
@@ -147,8 +142,4 @@ public class CreationReceta extends AppCompatActivity {
         });
     }
 
-
-
 }
-
-

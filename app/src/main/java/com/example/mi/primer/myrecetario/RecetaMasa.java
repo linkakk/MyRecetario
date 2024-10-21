@@ -4,69 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecetaMasa {
-    private String nombreDeLaMasa;
-    private String descripcionDeLaMasa;
-    private double cantidadDeAguaMasa;
-    private double cantidadDeLevaduraMasa;
-    private double cantidadDePrefermentoMasa;
-    private double cantidadDeHuevosMasa;
-    private double cantidadDeEsenciaMasa;
-    private double cantidadDeAzucarMasa;
-    private double cantidadDeSalMasa;
-    private double cantidadDeMargarinaMasa;
-    private double cantidadDeHarinaMasa;
-    private String preparacionMasa;
-    private String temperaturasMasas;
-    private String porcionadoMasas;
-    private String almacenamientoProductoFinal;
-    private int cantidadOriginal;
-    private List<Ingredientes.Ingrediente> ingredientes;
-
-
-
-    public void setIngredientes(List<Ingredientes.Ingrediente> ingredientes) {
-        this.ingredientes = ingredientes;
-    }
-
-    // Constructor vacío necesario para Firebase
-    public RecetaMasa() {
-    }
-
-    public int getCantidadOriginal() {
-        return cantidadOriginal;
-    }
-
-    public void setCantidadOriginal(int cantidadOriginal) {
-        this.cantidadOriginal = cantidadOriginal;
-    }
-
-    // Constructor con parámetros
-    public RecetaMasa(String nombreDeLaMasa, String descripcionDeLaMasa, double cantidadDeAguaMasa, double cantidadDeLevaduraMasa,
-                      double cantidadDePrefermentoMasa, double cantidadDeHuevosMasa, double cantidadDeEsenciaMasa,
-                      double cantidadDeAzucarMasa, double cantidadDeSalMasa, double cantidadDeMargarinaMasa,
-                      double cantidadDeHarinaMasa, String preparacionMasa, String temperaturasMasas,
-                      String porcionadoMasas, String almacenamientoProductoFinal,int cantidadOriginal,
-                      List<Ingredientes.Ingrediente> ingredientes) {
-        this.nombreDeLaMasa = nombreDeLaMasa;
-        this.descripcionDeLaMasa = descripcionDeLaMasa;
-        this.cantidadDeAguaMasa = cantidadDeAguaMasa;
-        this.cantidadDeLevaduraMasa = cantidadDeLevaduraMasa;
-        this.cantidadDePrefermentoMasa = cantidadDePrefermentoMasa;
-        this.cantidadDeHuevosMasa = cantidadDeHuevosMasa;
-        this.cantidadDeEsenciaMasa = cantidadDeEsenciaMasa;
-        this.cantidadDeAzucarMasa = cantidadDeAzucarMasa;
-        this.cantidadDeSalMasa = cantidadDeSalMasa;
-        this.cantidadDeMargarinaMasa = cantidadDeMargarinaMasa;
-        this.cantidadDeHarinaMasa = cantidadDeHarinaMasa;
-        this.preparacionMasa = preparacionMasa;
-        this.temperaturasMasas = temperaturasMasas;
-        this.porcionadoMasas = porcionadoMasas;
-        this.almacenamientoProductoFinal = almacenamientoProductoFinal;
-        this.cantidadOriginal = cantidadOriginal;
-        this.ingredientes = ingredientes;
-    }
-
-    // Getters y setters
     public String getNombreDeLaMasa() {
         return nombreDeLaMasa;
     }
@@ -102,10 +39,7 @@ public class RecetaMasa {
     public double getCantidadDePrefermentoMasa() {
         return cantidadDePrefermentoMasa;
     }
-    // Agregar el método getter para ingredientes
-    public List<Ingredientes.Ingrediente> getIngredientes() {
-        return ingredientes;
-    }
+
     public void setCantidadDePrefermentoMasa(double cantidadDePrefermentoMasa) {
         this.cantidadDePrefermentoMasa = cantidadDePrefermentoMasa;
     }
@@ -190,7 +124,86 @@ public class RecetaMasa {
         this.almacenamientoProductoFinal = almacenamientoProductoFinal;
     }
 
-    // Método para obtener información completa de la receta
+    private String nombreDeLaMasa;
+    private String descripcionDeLaMasa;
+    private double cantidadDeAguaMasa;
+    private double cantidadDeLevaduraMasa;
+    private double cantidadDePrefermentoMasa;
+    private double cantidadDeHuevosMasa;
+    private double cantidadDeEsenciaMasa;
+    private double cantidadDeAzucarMasa;
+    private double cantidadDeSalMasa;
+    private double cantidadDeMargarinaMasa;
+    private double cantidadDeHarinaMasa;
+    private String preparacionMasa;
+    private String temperaturasMasas;
+    private String porcionadoMasas;
+    private String almacenamientoProductoFinal;
+    private double cantidadOriginal;  // Cambiado a double
+    private List<Ingredientes.Ingrediente> ingredientes;
+
+    // Constructor vacío necesario para Firebase
+    public RecetaMasa() {
+    }
+
+    // Constructor con parámetros
+    public RecetaMasa(String nombreDeLaMasa, String descripcionDeLaMasa, double cantidadDeAguaMasa, double cantidadDeLevaduraMasa,
+                      double cantidadDePrefermentoMasa, double cantidadDeHuevosMasa, double cantidadDeEsenciaMasa,
+                      double cantidadDeAzucarMasa, double cantidadDeSalMasa, double cantidadDeMargarinaMasa,
+                      double cantidadDeHarinaMasa, String preparacionMasa, String temperaturasMasas,
+                      String porcionadoMasas, String almacenamientoProductoFinal, double cantidadOriginal, // Ajuste a double
+                      List<Ingredientes.Ingrediente> ingredientes) {
+        this.nombreDeLaMasa = nombreDeLaMasa;
+        this.descripcionDeLaMasa = descripcionDeLaMasa;
+        this.cantidadDeAguaMasa = cantidadDeAguaMasa;
+        this.cantidadDeLevaduraMasa = cantidadDeLevaduraMasa;
+        this.cantidadDePrefermentoMasa = cantidadDePrefermentoMasa;
+        this.cantidadDeHuevosMasa = cantidadDeHuevosMasa;
+        this.cantidadDeEsenciaMasa = cantidadDeEsenciaMasa;
+        this.cantidadDeAzucarMasa = cantidadDeAzucarMasa;
+        this.cantidadDeSalMasa = cantidadDeSalMasa;
+        this.cantidadDeMargarinaMasa = cantidadDeMargarinaMasa;
+        this.cantidadDeHarinaMasa = cantidadDeHarinaMasa;
+        this.preparacionMasa = preparacionMasa;
+        this.temperaturasMasas = temperaturasMasas;
+        this.porcionadoMasas = porcionadoMasas;
+        this.almacenamientoProductoFinal = almacenamientoProductoFinal;
+        this.cantidadOriginal = cantidadOriginal; // Ajuste a double
+        this.ingredientes = ingredientes;
+    }
+
+    // Método para obtener la lista ajustada de ingredientes
+    public List<Ingredientes.Ingrediente> getIngredientesAjustados(double cantidadSeleccionada) {
+        List<Ingredientes.Ingrediente> ingredientesAjustados = new ArrayList<>();
+
+        for (Ingredientes.Ingrediente ingrediente : this.ingredientes) {
+            // Calcular la cantidad ajustada usando la regla de tres
+            double cantidadAjustada = (ingrediente.getCantidad() * cantidadSeleccionada)/this.cantidadOriginal;
+            ingredientesAjustados.add(new Ingredientes.Ingrediente(ingrediente.getNombre(), cantidadAjustada));
+        }
+
+        return ingredientesAjustados;
+    }
+
+    // Otros getters y setters
+    public double getCantidadOriginal() {
+        return cantidadOriginal;
+    }
+
+    public void setCantidadOriginal(double cantidadOriginal) {
+        this.cantidadOriginal = cantidadOriginal;
+    }
+
+    public List<Ingredientes.Ingrediente> getIngredientes() {
+        return ingredientes;
+    }
+
+    public void setIngredientes(List<Ingredientes.Ingrediente> ingredientes) {
+        this.ingredientes = ingredientes;
+    }
+
+    // Otros getters y setters que ya tienes definidos...
+
     public String getInformacion() {
         return "Nombre: " + nombreDeLaMasa + "\n" +
                 "Descripción: " + descripcionDeLaMasa + "\n" +
@@ -208,18 +221,4 @@ public class RecetaMasa {
                 "Porcionado: " + porcionadoMasas + "\n" +
                 "Almacenamiento: " + almacenamientoProductoFinal;
     }
-    public List<Ingredientes.Ingrediente> getIngredientesAjustados(double cantidadSeleccionada) {
-        List<Ingredientes.Ingrediente> ingredientesAjustados = new ArrayList<>();
-
-        for (Ingredientes.Ingrediente ingrediente : this.ingredientes) {
-            // Calcular la cantidad ajustada usando la regla de tres
-            double cantidadAjustada = (ingrediente.getCantidad() / this.cantidadOriginal) * cantidadSeleccionada;
-            ingredientesAjustados.add(new Ingredientes.Ingrediente(ingrediente.getNombre(), cantidadAjustada));
-        }
-
-        return ingredientesAjustados;
-    }
-
-
-
 }

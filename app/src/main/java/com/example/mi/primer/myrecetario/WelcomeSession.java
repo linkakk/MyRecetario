@@ -62,14 +62,15 @@ public class WelcomeSession extends AppCompatActivity {
         // RecyclerView para mostrar contenido
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        // Configurar la barra de navegación inferior
+        configureBottomNavigationView();
         // Inicialización de listas
         recipes = new ArrayList<>();
         filteredRecipes = new ArrayList<>();
 
         // Inicializar el spinner
         spinnerAmount = findViewById(R.id.spinnerAmount);
-        String[] cantidades = new String[]{"8","12","15", "18", "20"};
+        String[] cantidades = new String[]{"8", "12", "15", "18", "20"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cantidades);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAmount.setAdapter(adapter);
@@ -83,8 +84,6 @@ public class WelcomeSession extends AppCompatActivity {
         // Cargar recetas desde Firebase
         loadRecipesFromFirebase();
 
-        // Configurar la barra de navegación inferior
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         // Lógica para filtrar las recetas a medida que el usuario escribe
         etSearch.addTextChangedListener(new TextWatcher() {
@@ -117,7 +116,7 @@ public class WelcomeSession extends AppCompatActivity {
     // Método para configurar el RecyclerView
     private void configurarRecyclerView() {
         double cantidadSeleccionada = obtenerCantidadSeleccionada();
-        recipeAdapter = new RecipeAdapter(filteredRecipes,cantidadSeleccionada  );
+        recipeAdapter = new RecipeAdapter(filteredRecipes, cantidadSeleccionada);
         recyclerView.setAdapter(recipeAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -174,18 +173,17 @@ public class WelcomeSession extends AppCompatActivity {
     private void ajustarIngredientes(double cantidadSeleccionada) {
         for (RecetaMasa recipe : filteredRecipes) {
             if (recipe != null) {
-                int cantidadOriginal = recipe.getCantidadOriginal();
+                double cantidadOriginal = recipe.getCantidadOriginal();
 
                 // Aplicar regla de tres solo si la cantidad seleccionada es distinta de la original
                 if (cantidadSeleccionada != cantidadOriginal) {
-                    double factor = (double) cantidadSeleccionada / cantidadOriginal;
+                    double factor = cantidadSeleccionada * cantidadOriginal;
 
                     // Ajustar todos los ingredientes de la receta utilizando la regla de tres
                     for (Ingredientes.Ingrediente ingrediente : recipe.getIngredientes()) {
-                        // Asegúrate de que el ingrediente tenga una cantidad original, si no es necesario, omite esta línea
-                        double cantidadOriginalIngrediente = ingrediente.getCantidad(); // Cambia esto si el método es diferente
-                        double cantidadAjustada = cantidadOriginalIngrediente * factor; // Aplicar regla de tres
-                        ingrediente.setCantidad(cantidadAjustada); // Actualizar la cantidad ajustada
+                        double cantidadOriginalIngrediente = ingrediente.getCantidad();
+                        double cantidadAjustada = cantidadOriginalIngrediente * factor;
+                        ingrediente.setCantidad(cantidadAjustada);  // Actualizar la cantidad ajustada
                     }
                 }
             }
@@ -194,7 +192,6 @@ public class WelcomeSession extends AppCompatActivity {
         recipeAdapter.notifyDataSetChanged();  // Actualiza el RecyclerView
     }
 
-
     // Método para cerrar sesión
     private void logout() {
         Toast.makeText(this, "Cerrando sesión...", Toast.LENGTH_SHORT).show();
@@ -202,9 +199,43 @@ public class WelcomeSession extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
     public double obtenerCantidadSeleccionada() {
         Spinner spinner = findViewById(R.id.spinnerAmount);
         return Double.parseDouble(spinner.getSelectedItem().toString()); // Asegúrate de que el spinner contenga valores numéricos
     }
+    private void configureBottomNavigationView() {
+        // Botón de búsqueda
+        MenuItem searchItem = bottomNavigationView.getMenu().findItem(R.id.navigation_search);
+        searchItem.setOnMenuItemClickListener(item -> {
+            Toast.makeText(WelcomeSession.this, "Has escogido la opción: Buscar", Toast.LENGTH_SHORT).show();
+            searchInputLayout.setVisibility(View.VISIBLE);  // Mostrar campo de búsqueda
+            return true;
+        });
 
+        // Botón de productos
+        MenuItem productsItem = bottomNavigationView.getMenu().findItem(R.id.navigation_products);
+        productsItem.setOnMenuItemClickListener(item -> {
+            Toast.makeText(WelcomeSession.this, "Has escogido la opción: Productos", Toast.LENGTH_SHORT).show();
+            // Lógica para mostrar productos aquí
+            return true;
+        });
+
+        // Botón para agregar productos
+        MenuItem addItem = bottomNavigationView.getMenu().findItem(R.id.navigation_add);
+        addItem.setOnMenuItemClickListener(item -> {
+            Intent intent = new Intent(this, CreationReceta.class);
+            startActivity(intent);
+            Toast.makeText(WelcomeSession.this, "Has escogido la opción: Agregar", Toast.LENGTH_SHORT).show();
+            return true;
+        });
+
+        // Botón para salir y cerrar sesión
+        MenuItem logoutItem = bottomNavigationView.getMenu().findItem(R.id.navigation_logout);
+        logoutItem.setOnMenuItemClickListener(item -> {
+            Toast.makeText(WelcomeSession.this, "Has escogido la opción: Salir", Toast.LENGTH_SHORT).show();
+            logout(); // Lógica para cerrar sesión
+            return true;
+        });
+    }
 }
