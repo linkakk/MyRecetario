@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
     }
     //ir a welcome
     public  void  irAWelcome(){
-        Intent intent = new Intent(this,WelcomeSession.class);
+        Intent intent = new Intent(this,com.example.mi.primer.myrecetario.WelcomeSession.class);
         startActivity(intent);
         finish();
     }

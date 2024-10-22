@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log; // Import necesario para Logcat
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WelcomeSession extends AppCompatActivity {
+    private static final String TAG = "WelcomeSession"; // Tag para Logcat
     private BottomNavigationView bottomNavigationView;
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
@@ -49,24 +51,33 @@ public class WelcomeSession extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_session);
 
+        Log.d(TAG, "onCreate: Iniciando WelcomeSession");
+
         // Referencia al BottomNavigationView
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        Log.d(TAG, "BottomNavigationView inicializado");
 
         // Referencia al TextInputLayout y TextInputEditText para búsqueda
         searchInputLayout = findViewById(R.id.textInputLayout);
         etSearch = findViewById(R.id.etsearchReceta);
+        Log.d(TAG, "TextInputLayout y TextInputEditText inicializados");
 
         // TextView para mostrar "Receta no encontrada"
         resultadoBusqueda = findViewById(R.id.resultadoBusqueda);
+        Log.d(TAG, "TextView para resultadoBusqueda inicializado");
 
         // RecyclerView para mostrar contenido
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Log.d(TAG, "RecyclerView inicializado y layout manager establecido");
+
         // Configurar la barra de navegación inferior
         configureBottomNavigationView();
+
         // Inicialización de listas
         recipes = new ArrayList<>();
         filteredRecipes = new ArrayList<>();
+        Log.d(TAG, "Listas de recetas inicializadas");
 
         // Inicializar el spinner
         spinnerAmount = findViewById(R.id.spinnerAmount);
@@ -74,16 +85,17 @@ public class WelcomeSession extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cantidades);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAmount.setAdapter(adapter);
+        Log.d(TAG, "Spinner inicializado con cantidades: 8, 12, 15, 18, 20");
 
         // Configurar el RecyclerView
         configurarRecyclerView();
 
         // Inicializar referencia a Firebase
         recipesRef = FirebaseDatabase.getInstance().getReference("recetas");
+        Log.d(TAG, "Referencia a Firebase Database inicializada");
 
         // Cargar recetas desde Firebase
         loadRecipesFromFirebase();
-
 
         // Lógica para filtrar las recetas a medida que el usuario escribe
         etSearch.addTextChangedListener(new TextWatcher() {
@@ -92,6 +104,7 @@ public class WelcomeSession extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.d(TAG, "onTextChanged: Buscando recetas con query: " + charSequence.toString());
                 filterRecipes(charSequence.toString());
             }
 
@@ -104,8 +117,11 @@ public class WelcomeSession extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectPost = parent.getItemAtPosition(position).toString();
-                double cantidadSeleccionada = Integer.parseInt(selectPost);
+                double cantidadSeleccionada = Double.parseDouble(selectPost); // Usar parseDouble para precisión
+                Log.d(TAG, "onItemSelected: Cantidad seleccionada del spinner: " + cantidadSeleccionada);
                 ajustarIngredientes(cantidadSeleccionada);  // Método para ajustar la receta según la selección
+                // Actualizar la cantidad seleccionada en el adaptador
+                recipeAdapter.setCantidadSeleccionada(cantidadSeleccionada);
             }
 
             @Override
@@ -119,10 +135,12 @@ public class WelcomeSession extends AppCompatActivity {
         recipeAdapter = new RecipeAdapter(filteredRecipes, cantidadSeleccionada);
         recyclerView.setAdapter(recipeAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Log.d(TAG, "RecyclerView configurado con RecipeAdapter y cantidadSeleccionada: " + cantidadSeleccionada);
     }
 
     // Método para cargar recetas desde Firebase
     private void loadRecipesFromFirebase() {
+        Log.d(TAG, "loadRecipesFromFirebase: Cargando recetas desde Firebase...");
         recipesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -130,15 +148,29 @@ public class WelcomeSession extends AppCompatActivity {
                 for (DataSnapshot recipeSnapshot : snapshot.getChildren()) {
                     RecetaMasa recipe = recipeSnapshot.getValue(RecetaMasa.class);  // Cambiar a tu modelo
                     if (recipe != null) {
+                        // Establecer los ingredientes originales como una copia de los ingredientes obtenidos
+                        if (recipe.getIngredientes() != null) {
+                            recipe.setIngredientesOriginales(new ArrayList<>(recipe.getIngredientes()));
+                            Log.d(TAG, "loadRecipesFromFirebase: Ingredientes originales establecidos para la receta " + recipe.getNombreDeLaMasa());
+                        } else {
+                            recipe.setIngredientesOriginales(new ArrayList<>());
+                            Log.d(TAG, "loadRecipesFromFirebase: No hay ingredientes para la receta " + recipe.getNombreDeLaMasa());
+                        }
                         recipes.add(recipe);  // Agregar objeto RecetaMasa completo
+                        Log.d(TAG, "loadRecipesFromFirebase: Receta agregada: " + recipe.getNombreDeLaMasa());
                     }
                 }
+                // Actualizar la lista filtrada con todas las recetas inicialmente
+                filteredRecipes.clear();
+                filteredRecipes.addAll(recipes);
                 recipeAdapter.notifyDataSetChanged();  // Notificar cambios al adaptador
+                Log.d(TAG, "loadRecipesFromFirebase: Todas las recetas cargadas: " + recipes.size());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(WelcomeSession.this, "Error al cargar datos de Firebase: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "loadRecipesFromFirebase: Error al cargar datos de Firebase: " + error.getMessage());
             }
         });
     }
@@ -146,6 +178,7 @@ public class WelcomeSession extends AppCompatActivity {
     // Método para filtrar las recetas según el texto ingresado
     private void filterRecipes(String query) {
         filteredRecipes.clear();
+        Log.d(TAG, "filterRecipes: Filtrando recetas con query: " + query);
 
         // Si el texto de búsqueda no está vacío
         if (!query.isEmpty()) {
@@ -153,6 +186,7 @@ public class WelcomeSession extends AppCompatActivity {
                 if (recipe != null && recipe.getNombreDeLaMasa() != null &&
                         recipe.getNombreDeLaMasa().toLowerCase().contains(query.toLowerCase())) {
                     filteredRecipes.add(recipe);
+                    Log.d(TAG, "filterRecipes: Receta filtrada: " + recipe.getNombreDeLaMasa());
                 }
             }
 
@@ -160,40 +194,55 @@ public class WelcomeSession extends AppCompatActivity {
             if (filteredRecipes.isEmpty()) {
                 resultadoBusqueda.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
+                Log.d(TAG, "filterRecipes: No se encontraron recetas para: " + query);
             } else {
                 resultadoBusqueda.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
+                Log.d(TAG, "filterRecipes: Recetas encontradas: " + filteredRecipes.size());
             }
+        } else {
+            // Si la búsqueda está vacía, mostrar todas las recetas
+            filteredRecipes.addAll(recipes);
+            Log.d(TAG, "filterRecipes: Búsqueda vacía, mostrando todas las recetas: " + filteredRecipes.size());
+            resultadoBusqueda.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
         }
 
         recipeAdapter.notifyDataSetChanged();
+        Log.d(TAG, "filterRecipes: RecyclerView actualizado con notifyDataSetChanged()");
     }
 
     // Método para ajustar los ingredientes según la cantidad seleccionada
     private void ajustarIngredientes(double cantidadSeleccionada) {
+        Log.d(TAG, "ajustarIngredientes: Ajustando ingredientes para la cantidad seleccionada: " + cantidadSeleccionada);
+
         for (RecetaMasa recipe : filteredRecipes) {
             if (recipe != null) {
                 double cantidadOriginal = recipe.getCantidadOriginal();
+                Log.d(TAG, "ajustarIngredientes: Cantidad original de la receta " + recipe.getNombreDeLaMasa() + ": " + cantidadOriginal);
 
-                // Aplicar regla de tres solo si la cantidad seleccionada es distinta de la original
                 if (cantidadSeleccionada != cantidadOriginal) {
-                    double factor = cantidadSeleccionada * cantidadOriginal;
+                    double factor = cantidadSeleccionada / cantidadOriginal; // Corregido: División en lugar de Multiplicación
+                    Log.d(TAG, "ajustarIngredientes: Factor de ajuste: " + factor);
 
-                    // Ajustar todos los ingredientes de la receta utilizando la regla de tres
-                    for (Ingredientes.Ingrediente ingrediente : recipe.getIngredientes()) {
-                        double cantidadOriginalIngrediente = ingrediente.getCantidad();
-                        double cantidadAjustada = cantidadOriginalIngrediente * factor;
-                        ingrediente.setCantidad(cantidadAjustada);  // Actualizar la cantidad ajustada
+                    List<Ingredientes.Ingrediente> ingredientesAjustados = recipe.getIngredientesAjustados(cantidadSeleccionada);
+
+
+                    for (Ingredientes.Ingrediente ingrediente : ingredientesAjustados) {
+                        Log.d(TAG, "ajustarIngredientes: Ingrediente ajustado: " + ingrediente.getNombre() + " - Nueva cantidad: " + ingrediente.getCantidad());
                     }
                 }
             }
         }
 
-        recipeAdapter.notifyDataSetChanged();  // Actualiza el RecyclerView
+        // Actualizar el adaptador para reflejar los nuevos ingredientes ajustados
+        recipeAdapter.notifyDataSetChanged();
+        Log.d(TAG, "ajustarIngredientes: RecyclerView actualizado con notifyDataSetChanged()");
     }
 
     // Método para cerrar sesión
     private void logout() {
+        Log.d(TAG, "logout: Cerrando sesión...");
         Toast.makeText(this, "Cerrando sesión...", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -202,8 +251,11 @@ public class WelcomeSession extends AppCompatActivity {
 
     public double obtenerCantidadSeleccionada() {
         Spinner spinner = findViewById(R.id.spinnerAmount);
-        return Double.parseDouble(spinner.getSelectedItem().toString()); // Asegúrate de que el spinner contenga valores numéricos
+        double cantidadSeleccionada = Double.parseDouble(spinner.getSelectedItem().toString()); // Asegúrate de usar parseDouble
+        Log.d(TAG, "obtenerCantidadSeleccionada: Cantidad seleccionada: " + cantidadSeleccionada);
+        return cantidadSeleccionada;
     }
+
     private void configureBottomNavigationView() {
         // Botón de búsqueda
         MenuItem searchItem = bottomNavigationView.getMenu().findItem(R.id.navigation_search);
