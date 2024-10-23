@@ -1,5 +1,8 @@
 package com.example.mi.primer.myrecetario;
 
+import android.util.Log;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecetaBatidos {
@@ -15,8 +18,14 @@ public class RecetaBatidos {
     private double complementoDelBatido;
     //este sera opcional
     private double chocolateDelBatido;
+    private double cantidadOriginal;
+    private double temperaturasMasas;
+    private double almacenamientoProductoFinal;
 
-    public RecetaBatidos(String nombreDelBatido, String descripcionDelBatido, double azucarDelBatido, double medioGrasoDelBatido, double esenciaDelBatido, double huevosDelBatido, double harinaDelBatido, double polvoParaHornearDelBatido, double liquidoDelBatido, double complementoDelBatido, double chocolateDelBatido, double cantidadOriginal, List<Ingredientes.Ingrediente> ingredientesOriginales) {
+    public RecetaBatidos() {
+    }
+
+    public RecetaBatidos(String nombreDelBatido, String descripcionDelBatido, double azucarDelBatido, double medioGrasoDelBatido, double esenciaDelBatido, double huevosDelBatido, double harinaDelBatido, double polvoParaHornearDelBatido, double liquidoDelBatido, double complementoDelBatido, double chocolateDelBatido, double cantidadOriginal, double temperaturasMasas, double almacenamientoProductoFinal, double porcionadoMasas, List<Ingredientes.Ingrediente> ingredientesOriginales) {
         this.nombreDelBatido = nombreDelBatido;
         DescripcionDelBatido = descripcionDelBatido;
         this.azucarDelBatido = azucarDelBatido;
@@ -29,11 +38,33 @@ public class RecetaBatidos {
         this.complementoDelBatido = complementoDelBatido;
         this.chocolateDelBatido = chocolateDelBatido;
         this.cantidadOriginal = cantidadOriginal;
+        this.temperaturasMasas = temperaturasMasas;
+        this.almacenamientoProductoFinal = almacenamientoProductoFinal;
+        this.porcionadoMasas = porcionadoMasas;
         this.ingredientesOriginales = ingredientesOriginales;
     }
-//constructor vacio para que interactue con fireBase
-    public RecetaBatidos() {
+
+    public double getTemperaturasMasas() {
+        return temperaturasMasas;
     }
+
+    public void setTemperaturasMasas(double temperaturasMasas) {
+        this.temperaturasMasas = temperaturasMasas;
+    }
+
+    public double getPorcionadoMasas() {
+        return porcionadoMasas;
+    }
+
+    public void setPorcionadoMasas(double porcionadoMasas) {
+        this.porcionadoMasas = porcionadoMasas;
+    }
+
+    private double porcionadoMasas;
+    // Nueva lista para almacenar los ingredientes originales
+    private List<Ingredientes.Ingrediente> ingredientesOriginales;
+
+
 
     public String getNombreDelBatido() {
         return nombreDelBatido;
@@ -136,11 +167,41 @@ public class RecetaBatidos {
     }
 
     public void setIngredientesOriginales(List<Ingredientes.Ingrediente> ingredientesOriginales) {
-        this.ingredientesOriginales = ingredientesOriginales;
+        this.ingredientesOriginales = ingredientesOriginales != null ? ingredientesOriginales : new ArrayList<>();
+    }
+    public List<Ingredientes.Ingrediente> getIngredientesAjustados(double cantidadSeleccionada) {
+        List<Ingredientes.Ingrediente> ingredientesAjustados = new ArrayList<>();
+
+        for (Ingredientes.Ingrediente ingrediente : this.ingredientesOriginales) {
+            // Calcular la cantidad ajustada usando la regla de tres
+            double cantidadAjustada = (ingrediente.getCantidad() * cantidadSeleccionada) / this.cantidadOriginal;
+            ingredientesAjustados.add(new Ingredientes.Ingrediente(ingrediente.getNombre(), cantidadAjustada));
+            Log.d("RecetaMasa", "getIngredientesAjustados: Ingrediente ajustado: " + ingrediente.getNombre() + " - Cantidad original: " + ingrediente.getCantidad() + " - Cantidad ajustada: " + cantidadAjustada);
+        }
+
+        return ingredientesAjustados;
+    }
+    public List<Ingredientes.Ingrediente> getIngredientes() {
+        return ingredientesOriginales; // Retorna ingredientesOriginales si no tienes una lista separada
     }
 
-    private double cantidadOriginal;
-    // Nueva lista para almacenar los ingredientes originales
-    private List<Ingredientes.Ingrediente> ingredientesOriginales;
+    public void setIngredientes(List<Ingredientes.Ingrediente> ingredientes) {
+        this.ingredientesOriginales = ingredientes != null ? ingredientes : new ArrayList<>();
+    }
+
+    public String getInformacion() {
+        return "Nombre: " + nombreDelBatido + "\n" +
+                "Descripción: " + DescripcionDelBatido + "\n" +
+                "Cantidad de Grasa / Aceite: " + medioGrasoDelBatido + "\n" +
+                "Cantidad de Huevos: " + huevosDelBatido + "\n" +
+                "Cantidad de Esencia: " + esenciaDelBatido + "\n" +
+                "Cantidad de Azúcar: " + esenciaDelBatido + "\n" +
+                "Cantidad de Harina: " + harinaDelBatido + "\n" +
+                "Temperaturas: " + temperaturasMasas + "\n" +
+                "Porcionado: " + porcionadoMasas + "\n" +
+                "Almacenamiento: " + almacenamientoProductoFinal;
+    }
+
+
 
 }

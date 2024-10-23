@@ -83,6 +83,7 @@ public class WelcomeSession extends AppCompatActivity {
         spinnerAmount = findViewById(R.id.spinnerAmount);
         String[] cantidades = new String[]{"8", "12", "15", "18", "20"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cantidades);
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAmount.setAdapter(adapter);
         Log.d(TAG, "Spinner inicializado con cantidades: 8, 12, 15, 18, 20");
@@ -276,7 +277,7 @@ public class WelcomeSession extends AppCompatActivity {
         // Botón para agregar productos
         MenuItem addItem = bottomNavigationView.getMenu().findItem(R.id.navigation_add);
         addItem.setOnMenuItemClickListener(item -> {
-            Intent intent = new Intent(this, CreationReceta.class);
+            Intent intent = new Intent(this, CreationRecetaOriginal.class);
             startActivity(intent);
             Toast.makeText(WelcomeSession.this, "Has escogido la opción: Agregar", Toast.LENGTH_SHORT).show();
             return true;

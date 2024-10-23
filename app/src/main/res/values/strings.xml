@@ -36,6 +36,8 @@
 
     <!-- Crea tu masa -->
     <string name="creaTuMasa">Nombre de la masa</string>
+    <string name="creaTuGalleta">Nombre de la Galleta</string>
+
     <string name="tipoDeMasa">Tipo de masa</string>
     <string name="nota">Nota : RECUERDE PESAR EN ESTE ORDEN</string>
     <string name="cantidadAgua">Cantidad agua</string>
@@ -47,6 +49,9 @@
     <string name="cantidadSal">Cantidad gramos de sal</string>
     <string name="cantidadMargarina">Cantidad gramos margarina</string>
     <string name="cantidadHarina">Cantidad gramos harina</string>
+    <string name="cantidadFeceulaDeMaiz">Cantidad gramos Fecula de maiz</string>
+    <string name="cantidadDePolvoParaHornear">Cantidad gramos polvo para hornear</string>
+    <string name="cantidadDeGramosDeChocolate">Cantidad gramos de chocolate</string>
 
 
     <!--welcome sesion -->
@@ -54,28 +59,8 @@
     <string name="search">Busca tu receta</string>
     <string name="Info">Informacion no encontrada</string>
     <string name="amount">Elija la cantidad que preparara</string>
+    <string name="title_activity_creation_receta_pasteles">CreationRecetaPasteles</string>
     <!-- para usar despues
-
-     <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/PesoCantidadUnidades"
-                android:textColor="@color/white"
-                android:textSize="25dp"
-                android:layout_marginTop="20dp"/>
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/nota"
-                android:textColor="@color/white"
-                android:textSize="25dp"
-                android:layout_marginTop="20dp"/>
-
-
      -->
 
 </resources>

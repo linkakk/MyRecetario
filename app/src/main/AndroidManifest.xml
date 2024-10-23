@@ -13,6 +13,25 @@
         android:theme="@style/Theme.Myrecetario"
         tools:targetApi="31">
         <activity
+            android:name=".CreationRecetaOriginal"
+            android:exported="false" />
+        <activity
+            android:name=".CreationRecetaRollo"
+            android:exported="false" />
+        <activity
+            android:name=".CreationRecetaGalletas"
+            android:exported="false" />
+        <activity
+            android:name=".CreationRecetaPasteles"
+            android:exported="false" />
+        <activity
+            android:name=".ui.login.CreationRecetaPasteles"
+            android:exported="false"
+            android:label="@string/title_activity_creation_receta_pasteles" />
+        <activity
+            android:name=".CreationRecetaBatidos"
+            android:exported="false" />
+        <activity
             android:name=".CreaTuMasa"
             android:exported="false" />
         <activity
