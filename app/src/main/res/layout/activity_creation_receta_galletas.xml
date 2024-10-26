@@ -191,17 +191,48 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:hint="@string/cantidadDePolvoParaHornear">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etCreationRecetaPreparacionPolvoHornear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:fontFamily="monospace"
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:background="@color/white" />
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/cantidadDeLimones">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPreparacionLimones"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="monospace"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/cantidadChocolate">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPreparacionChocolate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="monospace"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -235,7 +266,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:background="@color/white" />
@@ -277,7 +308,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btnCreationReceta"
+                android:id="@+id/btnCreationRecetaGalletas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"

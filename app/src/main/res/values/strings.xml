@@ -34,10 +34,10 @@
     <string name="porcionado">Porcionado</string>
     <string name="almacenamiento">Almacenamiento</string>
 
-    <!-- Crea tu masa -->
+    <!-- Crea tu Receta -->
     <string name="creaTuMasa">Nombre de la masa</string>
     <string name="creaTuGalleta">Nombre de la Galleta</string>
-
+    <string name="creaTuPastel">Nombre del pastel</string>
     <string name="tipoDeMasa">Tipo de masa</string>
     <string name="nota">Nota : RECUERDE PESAR EN ESTE ORDEN</string>
     <string name="cantidadAgua">Cantidad agua</string>
@@ -52,7 +52,9 @@
     <string name="cantidadFeceulaDeMaiz">Cantidad gramos Fecula de maiz</string>
     <string name="cantidadDePolvoParaHornear">Cantidad gramos polvo para hornear</string>
     <string name="cantidadDeGramosDeChocolate">Cantidad gramos de chocolate</string>
-
+    <string name="cantidadDeLimones">Cantidad de limones</string>
+    <string name="cantidadChocolate">Cantidad en Gramos de chocolate</string>
+    <string name="cantidadVitina">Cantidad en gramos de vitina</string>
 
     <!--welcome sesion -->
 

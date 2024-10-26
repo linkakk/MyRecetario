@@ -4,6 +4,289 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreationRecetaPasteles">
+    tools:context=".CreationRecetaPasteles"
+    android:background="@color/fondoPrincipal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/buttons"
+        android:padding="16dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Crea tu receta"
+            android:textSize="50sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/creaTuPastel">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationNombrePastel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/descripcion">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaDescripcionPastel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:imeOptions="actionNext"
+                    android:inputType="textMultiLine"
+                    android:maxLines="10"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/cantidadAgua">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPreparacionAguaPastel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:fontFamily="monospace"
+                    android:maxLines="10"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/cantidadEsencia">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPreparacionEsenciaPastel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/cantidadAzucar">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPreparacionAzucarPastel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:fontFamily="monospace"
+                    android:maxLines="10"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/cantidadSal">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPreparacionSalPastel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:fontFamily="monospace"
+                    android:maxLines="10"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/cantidadMargarina">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPreparacionMargarinaPastel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/cantidadHarina">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPreparacionHarinaPastel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/cantidadVitina">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaVitinaPastel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/temperatura">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaTemperaturaPastel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/preparacion">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPreparacionPastel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:inputType="textMultiLine"
+                    android:maxLines="10"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/porcionado">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaPorcionadoPastel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:inputType="textMultiLine"
+                    android:maxLines="10"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/almacenamiento">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCreationRecetaAlmacenamientoPastel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:inputType="textMultiLine"
+                    android:maxLines="10"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnCreationRecetaPastel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="40dp"
+                android:backgroundTint="@color/buttons"
+                android:text="@string/Create"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
