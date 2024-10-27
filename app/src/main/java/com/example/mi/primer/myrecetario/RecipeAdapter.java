@@ -14,10 +14,10 @@ import java.util.List;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
     private static final String TAG = "RecipeAdapter"; // Tag para Logcat
-    private List<RecetaMasa> recipeList;
+    private List<RecetaMasa> recipeList; // Cambiamos Object a RecetaMasa
     private double cantidadSeleccionada; // Cantidad seleccionada desde el spinner
 
-    // Constructor modificado para incluir la cantidad seleccionada
+    // Constructor modificado para aceptar List<RecetaMasa>
     public RecipeAdapter(List<RecetaMasa> recipeList, double cantidadSeleccionada) {
         this.recipeList = recipeList;
         this.cantidadSeleccionada = cantidadSeleccionada; // Guardar la cantidad seleccionada

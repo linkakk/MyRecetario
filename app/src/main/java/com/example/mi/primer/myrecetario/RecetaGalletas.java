@@ -21,11 +21,12 @@ public class RecetaGalletas {
     private String almacenamientoGalletas;
     private List<Ingredientes.Ingrediente> ingredientesOriginales;
 
-
-    public RecetaGalletas(String nombre, String descripcion, double cantidadHuevos, double cantidadEsencia, double cantidadAzucar, double cantidadMargarina, double cantidadHarina, double feculaMaiz, double cantidadChocolatepp, String preparacion, double temperatura, double porcionado, String almacenamiento, List<Ingredientes.Ingrediente> listaIngredientes) {
-    }
-
-    public RecetaGalletas(String nombreGalleta, String descripcionGalleta, double cantidadHuevosGalleta, double cantidadESenciaGalleta, double cantidadAzucarGalleta, double cantidadMargarinaGalleta, double cantidadHarinaGalleta, double cantidadLimonesGalleta, double cantidadChocolateGalleta, String preparacionGalletas, double temperaturaGalletas, double porcionadoGalletas, double feculaDeMaiz, double polvoParaHornear, String almacenamientoGalletas, List<Ingredientes.Ingrediente> ingredientesOriginales) {
+    public RecetaGalletas(String nombreGalleta, String descripcionGalleta, double cantidadHuevosGalleta,
+                          double cantidadESenciaGalleta, double cantidadAzucarGalleta, double cantidadMargarinaGalleta,
+                          double cantidadHarinaGalleta, double cantidadLimonesGalleta, double cantidadChocolateGalleta,
+                          String preparacionGalletas, double temperaturaGalletas, double porcionadoGalletas,
+                          double feculaDeMaiz, double polvoParaHornear, String almacenamientoGalletas,
+                          List<Ingredientes.Ingrediente> ingredientesOriginales) {
         this.nombreGalleta = nombreGalleta;
         this.descripcionGalleta = descripcionGalleta;
         this.cantidadHuevosGalleta = cantidadHuevosGalleta;
@@ -41,7 +42,7 @@ public class RecetaGalletas {
         this.feculaDeMaiz = feculaDeMaiz;
         this.polvoParaHornear = polvoParaHornear;
         this.almacenamientoGalletas = almacenamientoGalletas;
-        this.ingredientesOriginales = ingredientesOriginales;
+        this.ingredientesOriginales = ingredientesOriginales != null ? ingredientesOriginales : new ArrayList<>();
     }
 
     public String getNombreGalleta() {
@@ -169,8 +170,9 @@ public class RecetaGalletas {
     }
 
     public void setIngredientesOriginales(List<Ingredientes.Ingrediente> ingredientesOriginales) {
-        this.ingredientesOriginales = ingredientesOriginales != null ? ingredientesOriginales : new ArrayList<>();;
+        this.ingredientesOriginales = ingredientesOriginales != null ? ingredientesOriginales : new ArrayList<>();
     }
+
     public String getInformacion() {
         return "Nombre: " + nombreGalleta + "\n" +
                 "Descripción: " + descripcionGalleta + "\n" +

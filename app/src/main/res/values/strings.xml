@@ -38,6 +38,7 @@
     <string name="creaTuMasa">Nombre de la masa</string>
     <string name="creaTuGalleta">Nombre de la Galleta</string>
     <string name="creaTuPastel">Nombre del pastel</string>
+    <string name="creaTuBatido">Nombre de la torta</string>
     <string name="tipoDeMasa">Tipo de masa</string>
     <string name="nota">Nota : RECUERDE PESAR EN ESTE ORDEN</string>
     <string name="cantidadAgua">Cantidad agua</string>
@@ -55,6 +56,9 @@
     <string name="cantidadDeLimones">Cantidad de limones</string>
     <string name="cantidadChocolate">Cantidad en Gramos de chocolate</string>
     <string name="cantidadVitina">Cantidad en gramos de vitina</string>
+    <string name="cantidadLeche">Cantidad en gramos de leche</string>
+    <string name="ralladuraLimon">Cantidad de limones rayados</string>
+    <string name="cantidadZanahora">Cantidad en gramos de zanahoria </string>
 
     <!--welcome sesion -->
 

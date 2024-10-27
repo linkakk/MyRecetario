@@ -44,7 +44,9 @@ public class WelcomeSession extends AppCompatActivity {
     private List<RecetaMasa> recipes;  // Lista completa de recetas desde Firebase
     private List<RecetaMasa> filteredRecipes;  // Lista de recetas filtradas
 
-    private DatabaseReference recipesRef;  // Referencia a Firebase Database
+    private DatabaseReference recipesRef, galletasRef, pastelesRef, tortasRef;
+    private int nodeCount = 0;
+    private final int totalNodes = 4;  // Actualizar si agregas o eliminas nodos
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +95,10 @@ public class WelcomeSession extends AppCompatActivity {
 
         // Inicializar referencia a Firebase
         recipesRef = FirebaseDatabase.getInstance().getReference("recetas");
+        galletasRef = FirebaseDatabase.getInstance().getReference("Galletas");
+        pastelesRef = FirebaseDatabase.getInstance().getReference("Pasteles");
+        tortasRef = FirebaseDatabase.getInstance().getReference("Tortas");
+
         Log.d(TAG, "Referencia a Firebase Database inicializada");
 
         // Cargar recetas desde Firebase
@@ -141,41 +147,46 @@ public class WelcomeSession extends AppCompatActivity {
 
     // Método para cargar recetas desde Firebase
     private void loadRecipesFromFirebase() {
-        Log.d(TAG, "loadRecipesFromFirebase: Cargando recetas desde Firebase...");
-        recipesRef.addValueEventListener(new ValueEventListener() {
+        // Limpiar la lista antes de cargar para evitar duplicados
+        recipes.clear();
+        nodeCount = 0;  // Reinicia el contador antes de cada carga
+        loadFromNode(recipesRef);
+        loadFromNode(galletasRef);
+        loadFromNode(pastelesRef);
+        loadFromNode(tortasRef);
+    }
+
+    private void loadFromNode(DatabaseReference nodeRef) {
+        nodeRef.addListenerForSingleValueEvent(new ValueEventListener() { // Cambiado a addListenerForSingleValueEvent
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                recipes.clear();  // Limpiar la lista existente
                 for (DataSnapshot recipeSnapshot : snapshot.getChildren()) {
-                    RecetaMasa recipe = recipeSnapshot.getValue(RecetaMasa.class);  // Cambiar a tu modelo
+                    RecetaMasa recipe = recipeSnapshot.getValue(RecetaMasa.class);
                     if (recipe != null) {
-                        // Establecer los ingredientes originales como una copia de los ingredientes obtenidos
                         if (recipe.getIngredientes() != null) {
                             recipe.setIngredientesOriginales(new ArrayList<>(recipe.getIngredientes()));
-                            Log.d(TAG, "loadRecipesFromFirebase: Ingredientes originales establecidos para la receta " + recipe.getNombreDeLaMasa());
                         } else {
                             recipe.setIngredientesOriginales(new ArrayList<>());
-                            Log.d(TAG, "loadRecipesFromFirebase: No hay ingredientes para la receta " + recipe.getNombreDeLaMasa());
                         }
-                        recipes.add(recipe);  // Agregar objeto RecetaMasa completo
-                        Log.d(TAG, "loadRecipesFromFirebase: Receta agregada: " + recipe.getNombreDeLaMasa());
+                        recipes.add(recipe);
                     }
                 }
-                // Actualizar la lista filtrada con todas las recetas inicialmente
-                filteredRecipes.clear();
-                filteredRecipes.addAll(recipes);
-                recipeAdapter.notifyDataSetChanged();  // Notificar cambios al adaptador
-                Log.d(TAG, "loadRecipesFromFirebase: Todas las recetas cargadas: " + recipes.size());
+
+                nodeCount++;  // Incrementa el contador de nodos cargados
+                if (nodeCount == totalNodes) {  // Verifica si se cargaron todos los nodos
+                    // Clona recipes a filteredRecipes para mostrar todos los resultados
+                    filteredRecipes.clear();
+                    filteredRecipes.addAll(recipes);
+                    recipeAdapter.notifyDataSetChanged();  // Notifica cambios al adaptador
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(WelcomeSession.this, "Error al cargar datos de Firebase: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "loadRecipesFromFirebase: Error al cargar datos de Firebase: " + error.getMessage());
             }
         });
     }
-
     // Método para filtrar las recetas según el texto ingresado
     private void filterRecipes(String query) {
         filteredRecipes.clear();
