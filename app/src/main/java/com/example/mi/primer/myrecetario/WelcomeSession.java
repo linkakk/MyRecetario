@@ -41,8 +41,9 @@ public class WelcomeSession extends AppCompatActivity {
     private TextInputLayout searchInputLayout;
     private TextView resultadoBusqueda;
 
-    private List<RecetaMasa> recipes;  // Lista completa de recetas desde Firebase
-    private List<RecetaMasa> filteredRecipes;  // Lista de recetas filtradas
+    private List<Receta> recipes;  // Lista completa de recetas desde Firebase
+    private List<Receta> filteredRecipes;  // Lista de recetas filtradas
+
 
     private DatabaseReference recipesRef, galletasRef, pastelesRef, tortasRef;
     private int nodeCount = 0;
@@ -163,6 +164,10 @@ public class WelcomeSession extends AppCompatActivity {
                 for (DataSnapshot recipeSnapshot : snapshot.getChildren()) {
                     RecetaMasa recipe = recipeSnapshot.getValue(RecetaMasa.class);
                     if (recipe != null) {
+                        Log.d("WelcomeSession", "Receta cargada: " + recipe.getNombre());
+                        Log.d("WelcomeSession", "Cantidad original: " + recipe.getCantidadOriginal());
+                        Log.d("WelcomeSession", "Descripción: " + recipe.getDescripcion());
+                        Log.d("WelcomeSession", "Ingredientes: " + recipe.getIngredientes().size());
                         if (recipe.getIngredientes() != null) {
                             recipe.setIngredientesOriginales(new ArrayList<>(recipe.getIngredientes()));
                         } else {
@@ -194,11 +199,11 @@ public class WelcomeSession extends AppCompatActivity {
 
         // Si el texto de búsqueda no está vacío
         if (!query.isEmpty()) {
-            for (RecetaMasa recipe : recipes) {
-                if (recipe != null && recipe.getNombreDeLaMasa() != null &&
-                        recipe.getNombreDeLaMasa().toLowerCase().contains(query.toLowerCase())) {
+            for (Receta recipe : recipes) {
+                if (recipe != null && recipe.getNombre() != null &&
+                        recipe.getNombre().toLowerCase().contains(query.toLowerCase())) {
                     filteredRecipes.add(recipe);
-                    Log.d(TAG, "filterRecipes: Receta filtrada: " + recipe.getNombreDeLaMasa());
+                    Log.d(TAG, "filterRecipes: Receta filtrada: " + recipe.getNombre());
                 }
             }
 
@@ -228,10 +233,10 @@ public class WelcomeSession extends AppCompatActivity {
     private void ajustarIngredientes(double cantidadSeleccionada) {
         Log.d(TAG, "ajustarIngredientes: Ajustando ingredientes para la cantidad seleccionada: " + cantidadSeleccionada);
 
-        for (RecetaMasa recipe : filteredRecipes) {
+        for (Receta recipe : filteredRecipes) {
             if (recipe != null) {
                 double cantidadOriginal = recipe.getCantidadOriginal();
-                Log.d(TAG, "ajustarIngredientes: Cantidad original de la receta " + recipe.getNombreDeLaMasa() + ": " + cantidadOriginal);
+                Log.d(TAG, "ajustarIngredientes: Cantidad original de la receta " + recipe.getNombre() + ": " + cantidadOriginal);
 
                 if (cantidadSeleccionada != cantidadOriginal) {
                     double factor = cantidadSeleccionada / cantidadOriginal; // Corregido: División en lugar de Multiplicación

@@ -14,15 +14,16 @@ import java.util.List;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
     private static final String TAG = "RecipeAdapter"; // Tag para Logcat
-    private List<RecetaMasa> recipeList; // Cambiamos Object a RecetaMasa
+    private List<Receta> recipeList;  // Cambiado de RecetaMasa a Receta
     private double cantidadSeleccionada; // Cantidad seleccionada desde el spinner
 
     // Constructor modificado para aceptar List<RecetaMasa>
-    public RecipeAdapter(List<RecetaMasa> recipeList, double cantidadSeleccionada) {
+    public RecipeAdapter(List<Receta> recipeList, double cantidadSeleccionada) {
         this.recipeList = recipeList;
-        this.cantidadSeleccionada = cantidadSeleccionada; // Guardar la cantidad seleccionada
+        this.cantidadSeleccionada = cantidadSeleccionada;
         Log.d(TAG, "RecipeAdapter inicializado con " + recipeList.size() + " recetas y cantidadSeleccionada: " + cantidadSeleccionada);
     }
+
 
     @NonNull
     @Override
@@ -35,23 +36,34 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
-        // Obtener la receta actual
-        RecetaMasa recipe = recipeList.get(position);
-        Log.d(TAG, "onBindViewHolder: Receta " + position + " - " + recipe.getNombreDeLaMasa());
+        Log.d(TAG, "onBindViewHolder: recipeList size = " + recipeList.size() + ", cantidadSeleccionada = " + cantidadSeleccionada);
 
-        // Mostrar el nombre de la receta
-        holder.recipeTitle.setText(recipe.getNombreDeLaMasa());
+        Receta recipe = recipeList.get(position);  // Ahora es de tipo Receta
 
-        // Mostrar información adicional de la receta
-        holder.recipeInfo.setText(recipe.getInformacion());
+        // Añadimos registros detallados para verificar los datos
+        Log.d(TAG, "onBindViewHolder: Receta " + position + " - Clase: " + recipe.getClass().getSimpleName());
+        String nombre = recipe.getNombre() != null ? recipe.getNombre() : "Nombre no disponible";
+        String informacion = recipe.getInformacion() != null ? recipe.getInformacion() : "Información no disponible";
 
-        // Obtener los ingredientes ajustados usando la cantidad seleccionada
-        List<Ingredientes.Ingrediente> ingredientesAjustados = recipe.getIngredientesAjustados(cantidadSeleccionada);
-        Log.d(TAG, "Receta " + recipe.getNombreDeLaMasa() + " - Ingredientes ajustados: " + ingredientesAjustados.size());
+        Log.d(TAG, "onBindViewHolder: Nombre obtenido - " + nombre);
+        Log.d(TAG, "onBindViewHolder: Información obtenida - " + informacion);
 
-        // Actualizar el adaptador de ingredientes
-        holder.ingredientAdapter.setIngredients(ingredientesAjustados);
+        // Configura la vista con el nombre y la descripción de la receta
+        holder.recipeTitle.setText(nombre);
+        holder.recipeInfo.setText(informacion);
+
+        // Verifica el tipo de receta y ajusta los ingredientes según la cantidad seleccionada
+        if (recipe instanceof RecetaMasa) {
+            List<Ingredientes.Ingrediente> ingredientesAjustados = ((RecetaMasa) recipe).getIngredientesAjustados(cantidadSeleccionada);
+            Log.d(TAG, "onBindViewHolder: Ajustando ingredientes para RecetaMasa con " + ingredientesAjustados.size() + " ingredientes");
+            holder.ingredientAdapter.setIngredients(ingredientesAjustados);
+        } else if (recipe instanceof RecetaBatidos) {
+            List<Ingredientes.Ingrediente> ingredientesAjustados = ((RecetaBatidos) recipe).getIngredientesAjustados(cantidadSeleccionada);
+            Log.d(TAG, "onBindViewHolder: Ajustando ingredientes para RecetaBatidos con " + ingredientesAjustados.size() + " ingredientes");
+            holder.ingredientAdapter.setIngredients(ingredientesAjustados);
+        }
     }
+
 
     @Override
     public int getItemCount() {
@@ -90,10 +102,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     }
 
     // Método para actualizar la lista de recetas
-    public void setRecipes(List<RecetaMasa> newRecipeList, double nuevaCantidadSeleccionada) {
+    public void setRecipes(List<Receta> newRecipeList, double nuevaCantidadSeleccionada) {
         this.recipeList = newRecipeList;
         this.cantidadSeleccionada = nuevaCantidadSeleccionada;
-        Log.d(TAG, "setRecipes: Lista de recetas actualizada con " + newRecipeList.size() + " recetas y cantidadSeleccionada: " + nuevaCantidadSeleccionada);
+        for (Receta receta : newRecipeList) {
+            Log.d(TAG, "setRecipes: Cargando receta - Nombre: " + receta.getNombre());
+        }
         notifyDataSetChanged();
     }
+
 }

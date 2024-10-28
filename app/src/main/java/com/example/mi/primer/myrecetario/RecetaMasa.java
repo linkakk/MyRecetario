@@ -4,8 +4,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecetaMasa {
-    // Campos existentes
+public class RecetaMasa implements Receta {
+    // Campos de clase
     private String nombreDeLaMasa;
     private String descripcionDeLaMasa;
     private double cantidadDeAguaMasa;
@@ -21,17 +21,18 @@ public class RecetaMasa {
     private String temperaturasMasas;
     private String porcionadoMasas;
     private String almacenamientoProductoFinal;
-    private double cantidadOriginal;  // Cambiado a double
+    private double cantidadOriginal;  // Cantidad de referencia para ajustes
 
-    // Nueva lista para almacenar los ingredientes originales
+    // Lista para almacenar los ingredientes originales
     private List<Ingredientes.Ingrediente> ingredientesOriginales;
 
     // Constructor vacío necesario para Firebase
     public RecetaMasa() {
         ingredientesOriginales = new ArrayList<>();
+        Log.d("RecetaMasa", "Constructor vacío de RecetaMasa llamado.");
     }
 
-    // Constructor con parámetros
+    // Constructor completo
     public RecetaMasa(String nombreDeLaMasa, String descripcionDeLaMasa, double cantidadDeAguaMasa, double cantidadDeLevaduraMasa,
                       double cantidadDePrefermentoMasa, double cantidadDeHuevosMasa, double cantidadDeEsenciaMasa,
                       double cantidadDeAzucarMasa, double cantidadDeSalMasa, double cantidadDeMargarinaMasa,
@@ -55,62 +56,60 @@ public class RecetaMasa {
         this.almacenamientoProductoFinal = almacenamientoProductoFinal;
         this.cantidadOriginal = cantidadOriginal;
         this.ingredientesOriginales = ingredientesOriginales != null ? ingredientesOriginales : new ArrayList<>();
+
+        Log.d("RecetaMasa", "Constructor de RecetaMasa llamado con nombre: " + nombreDeLaMasa);
     }
 
-    // Getter y Setter para ingredientesOriginales
-    public List<Ingredientes.Ingrediente> getIngredientesOriginales() {
-        return ingredientesOriginales;
+    // Implementación de métodos de la interfaz
+    @Override
+    public String getNombre() {
+        Log.d("RecetaMasa", "getNombre: " + nombreDeLaMasa);
+        return nombreDeLaMasa != null ? nombreDeLaMasa : "Sin nombre";
     }
 
-    public void setIngredientesOriginales(List<Ingredientes.Ingrediente> ingredientesOriginales) {
-        this.ingredientesOriginales = ingredientesOriginales != null ? ingredientesOriginales : new ArrayList<>();
+    @Override
+    public String getDescripcion() {
+        Log.d("RecetaMasa", "getDescripcion: " + descripcionDeLaMasa);
+        return descripcionDeLaMasa != null ? descripcionDeLaMasa : "Sin descripción";
     }
 
-    // Método para obtener la lista ajustada de ingredientes utilizando ingredientesOriginales
+    @Override
+    public double getCantidadOriginal() {
+        Log.d("RecetaMasa", "getCantidadOriginal: " + cantidadOriginal);
+        return cantidadOriginal > 0 ? cantidadOriginal : 1.0; // Asegura un valor no cero para evitar divisiones por cero
+    }
+
+    @Override
     public List<Ingredientes.Ingrediente> getIngredientesAjustados(double cantidadSeleccionada) {
         List<Ingredientes.Ingrediente> ingredientesAjustados = new ArrayList<>();
+        if (cantidadOriginal == 0) {
+            Log.w("RecetaMasa", "Cantidad original es cero, ajuste no es posible.");
+            return ingredientesAjustados;
+        }
 
-        for (Ingredientes.Ingrediente ingrediente : this.ingredientesOriginales) {
-            // Calcular la cantidad ajustada usando la regla de tres
-            double cantidadAjustada = (ingrediente.getCantidad() * cantidadSeleccionada) / this.cantidadOriginal;
+        for (Ingredientes.Ingrediente ingrediente : ingredientesOriginales) {
+            double cantidadAjustada = (ingrediente.getCantidad() * cantidadSeleccionada) / cantidadOriginal;
             ingredientesAjustados.add(new Ingredientes.Ingrediente(ingrediente.getNombre(), cantidadAjustada));
-            Log.d("RecetaMasa", "getIngredientesAjustados: Ingrediente ajustado: " + ingrediente.getNombre() + " - Cantidad original: " + ingrediente.getCantidad() + " - Cantidad ajustada: " + cantidadAjustada);
+            Log.d("RecetaMasa", "Ingrediente ajustado: " + ingrediente.getNombre() + " - Cantidad original: " + ingrediente.getCantidad() + " - Cantidad ajustada: " + cantidadAjustada);
         }
 
         return ingredientesAjustados;
-    }
-
-    // Otros getters y setters...
-    public double getCantidadOriginal() {
-        return cantidadOriginal;
-    }
-
-    public void setCantidadOriginal(double cantidadOriginal) {
-        this.cantidadOriginal = cantidadOriginal;
     }
 
     public String getNombreDeLaMasa() {
         return nombreDeLaMasa;
     }
 
-    public void setNombreDeLaMasa(String nombreDeLaMasa) {
-        this.nombreDeLaMasa = nombreDeLaMasa;
-    }
-
     public String getDescripcionDeLaMasa() {
         return descripcionDeLaMasa;
     }
 
-    public void setDescripcionDeLaMasa(String descripcionDeLaMasa) {
-        this.descripcionDeLaMasa = descripcionDeLaMasa;
+    public List<Ingredientes.Ingrediente> getIngredientesOriginales() {
+        return ingredientesOriginales;
     }
 
-    public List<Ingredientes.Ingrediente> getIngredientes() {
-        return ingredientesOriginales; // Retorna ingredientesOriginales si no tienes una lista separada
-    }
-
-    public void setIngredientes(List<Ingredientes.Ingrediente> ingredientes) {
-        this.ingredientesOriginales = ingredientes != null ? ingredientes : new ArrayList<>();
+    public void setIngredientesOriginales(List<Ingredientes.Ingrediente> ingredientesOriginales) {
+        this.ingredientesOriginales = ingredientesOriginales;
     }
 
     public double getCantidadDeAguaMasa() {
@@ -217,9 +216,17 @@ public class RecetaMasa {
         this.almacenamientoProductoFinal = almacenamientoProductoFinal;
     }
 
+    @Override
+    public List<Ingredientes.Ingrediente> getIngredientes() {
+        Log.d("RecetaMasa", "getIngredientes: " + ingredientesOriginales.size() + " ingredientes.");
+        return ingredientesOriginales != null ? ingredientesOriginales : new ArrayList<>();
+    }
+
+    @Override
     public String getInformacion() {
-        return "Nombre: " + nombreDeLaMasa + "\n" +
-                "Descripción: " + descripcionDeLaMasa + "\n" +
+        Log.d("RecetaMasa", "getInformacion: Generando información completa de la receta.");
+        return "Nombre: " + getNombre() + "\n" +
+                "Descripción: " + getDescripcion() + "\n" +
                 "Cantidad de Agua: " + cantidadDeAguaMasa + "\n" +
                 "Cantidad de Levadura: " + cantidadDeLevaduraMasa + "\n" +
                 "Cantidad de Prefermento: " + cantidadDePrefermentoMasa + "\n" +
@@ -234,4 +241,22 @@ public class RecetaMasa {
                 "Porcionado: " + porcionadoMasas + "\n" +
                 "Almacenamiento: " + almacenamientoProductoFinal;
     }
+
+    // Otros getters y setters con Log.d adicional para asegurar el correcto flujo de datos
+    public void setNombreDeLaMasa(String nombreDeLaMasa) {
+        this.nombreDeLaMasa = nombreDeLaMasa;
+        Log.d("RecetaMasa", "setNombreDeLaMasa: Nombre establecido a " + nombreDeLaMasa);
+    }
+
+    public void setDescripcionDeLaMasa(String descripcionDeLaMasa) {
+        this.descripcionDeLaMasa = descripcionDeLaMasa;
+        Log.d("RecetaMasa", "setDescripcionDeLaMasa: Descripción establecida a " + descripcionDeLaMasa);
+    }
+
+    public void setCantidadOriginal(double cantidadOriginal) {
+        this.cantidadOriginal = cantidadOriginal;
+        Log.d("RecetaMasa", "setCantidadOriginal: Cantidad original establecida a " + cantidadOriginal);
+    }
+
+    // Otros métodos se mantienen igual
 }

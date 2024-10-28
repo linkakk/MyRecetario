@@ -1,13 +1,12 @@
 package com.example.mi.primer.myrecetario;
 
 import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecetaBatidos {
+public class RecetaBatidos implements Receta {
     private String nombreDelBatido;
-    private String DescripcionDelBatido;
+    private String descripcionDelBatido;
     private double azucarDelBatido;
     private double medioGrasoDelBatido;
     private double esenciaDelBatido;
@@ -16,22 +15,31 @@ public class RecetaBatidos {
     private double polvoParaHornearDelBatido;
     private double lecheBatido;
     private double limonBatido;
-    private double zanahoraBatido;
+    private double zanahoriaBatido;
     private double ralladuraLimon;
     private double chocolateDelBatido;
     private double temperaturaBatido;
     private String preparacionBatido;
     private String almacenamientoProductoFinal;
     private String porcionadoBatido;
+    private double cantidadOriginal;
     private List<Ingredientes.Ingrediente> ingredientesOriginales;
 
-
+    // Constructor vacío necesario para Firebase
     public RecetaBatidos() {
+        ingredientesOriginales = new ArrayList<>();
     }
 
-    public RecetaBatidos(String nombreDelBatido, String descripcionDelBatido, double azucarDelBatido, double medioGrasoDelBatido, double esenciaDelBatido, double huevosDelBatido, double harinaDelBatido, double polvoParaHornearDelBatido, double lecheBatido, double limonBatido, double zanahoraBatido, double ralladuraLimon, double chocolateDelBatido, double temperaturaBatido, String preparacionBatido, String almacenamientoProductoFinal,String porcionadoBatido, List<Ingredientes.Ingrediente> ingredientesOriginales) {
+    // Constructor con todos los parámetros
+    public RecetaBatidos(String nombreDelBatido, String descripcionDelBatido, double azucarDelBatido,
+                         double medioGrasoDelBatido, double esenciaDelBatido, double huevosDelBatido,
+                         double harinaDelBatido, double polvoParaHornearDelBatido, double lecheBatido,
+                         double limonBatido, double zanahoriaBatido, double ralladuraLimon,
+                         double chocolateDelBatido, double temperaturaBatido, String preparacionBatido,
+                         String almacenamientoProductoFinal, String porcionadoBatido,
+                         double cantidadOriginal, List<Ingredientes.Ingrediente> ingredientesOriginales) {
         this.nombreDelBatido = nombreDelBatido;
-        this.DescripcionDelBatido = descripcionDelBatido;
+        this.descripcionDelBatido = descripcionDelBatido;
         this.azucarDelBatido = azucarDelBatido;
         this.medioGrasoDelBatido = medioGrasoDelBatido;
         this.esenciaDelBatido = esenciaDelBatido;
@@ -40,192 +48,76 @@ public class RecetaBatidos {
         this.polvoParaHornearDelBatido = polvoParaHornearDelBatido;
         this.lecheBatido = lecheBatido;
         this.limonBatido = limonBatido;
-        this.zanahoraBatido = zanahoraBatido;
+        this.zanahoriaBatido = zanahoriaBatido;
         this.ralladuraLimon = ralladuraLimon;
         this.chocolateDelBatido = chocolateDelBatido;
         this.temperaturaBatido = temperaturaBatido;
         this.preparacionBatido = preparacionBatido;
         this.almacenamientoProductoFinal = almacenamientoProductoFinal;
         this.porcionadoBatido = porcionadoBatido;
-        this.ingredientesOriginales = ingredientesOriginales;
+        this.cantidadOriginal = cantidadOriginal;
+        this.ingredientesOriginales = ingredientesOriginales != null ? ingredientesOriginales : new ArrayList<>();
     }
 
-    public String getNombreDelBatido() {
-        return nombreDelBatido;
+    public RecetaBatidos(String nombre, String descripcion, double cantidadAzucar, double cantidadMargarina, double cantidadEsencia, double cantidadHuevos, double cantidadHarina, double cantidadPolvoParaHornear, double cantidadLeche, double cantidadLimones, double cantidadZanahoria, double cantidadLimonesRallados, double cantidadChocolate, double temperaturaHorno, String preparacion, String almacenamiento, String porcionado, List<Ingredientes.Ingrediente> listaIngredientes) {
     }
 
-    public void setNombreDelBatido(String nombreDelBatido) {
-        this.nombreDelBatido = nombreDelBatido;
+    // Implementación de métodos de la interfaz Receta
+    @Override
+    public String getNombre() {
+        Log.d("RecetaBatidos", "getNombre: " + nombreDelBatido);
+        return nombreDelBatido != null ? nombreDelBatido : "Sin nombre";
     }
 
-    public String getDescripcionDelBatido() {
-        return DescripcionDelBatido;
+    @Override
+    public String getDescripcion() {
+        Log.d("RecetaBatidos", "getDescripcion: " + descripcionDelBatido);
+        return descripcionDelBatido != null ? descripcionDelBatido : "Sin descripción";
     }
 
-    public void setDescripcionDelBatido(String descripcionDelBatido) {
-        DescripcionDelBatido = descripcionDelBatido;
+    @Override
+    public double getCantidadOriginal() {
+        Log.d("RecetaBatidos", "getCantidadOriginal: " + cantidadOriginal);
+        return cantidadOriginal > 0 ? cantidadOriginal : 1.0;
     }
 
-    public double getAzucarDelBatido() {
-        return azucarDelBatido;
-    }
-
-    public void setAzucarDelBatido(double azucarDelBatido) {
-        this.azucarDelBatido = azucarDelBatido;
-    }
-
-    public double getMedioGrasoDelBatido() {
-        return medioGrasoDelBatido;
-    }
-
-    public void setMedioGrasoDelBatido(double medioGrasoDelBatido) {
-        this.medioGrasoDelBatido = medioGrasoDelBatido;
-    }
-
-    public double getEsenciaDelBatido() {
-        return esenciaDelBatido;
-    }
-
-    public void setEsenciaDelBatido(double esenciaDelBatido) {
-        this.esenciaDelBatido = esenciaDelBatido;
-    }
-
-    public double getHuevosDelBatido() {
-        return huevosDelBatido;
-    }
-
-    public void setHuevosDelBatido(double huevosDelBatido) {
-        this.huevosDelBatido = huevosDelBatido;
-    }
-
-    public double getHarinaDelBatido() {
-        return harinaDelBatido;
-    }
-
-    public void setHarinaDelBatido(double harinaDelBatido) {
-        this.harinaDelBatido = harinaDelBatido;
-    }
-
-    public double getPolvoParaHornearDelBatido() {
-        return polvoParaHornearDelBatido;
-    }
-
-    public void setPolvoParaHornearDelBatido(double polvoParaHornearDelBatido) {
-        this.polvoParaHornearDelBatido = polvoParaHornearDelBatido;
-    }
-
-    public double getLecheBatido() {
-        return lecheBatido;
-    }
-
-    public void setLecheBatido(double lecheBatido) {
-        this.lecheBatido = lecheBatido;
-    }
-
-    public double getLimonBatido() {
-        return limonBatido;
-    }
-
-    public void setLimonBatido(double limonBatido) {
-        this.limonBatido = limonBatido;
-    }
-
-
-
-
-    public double getZanahoraBatido() {
-        return zanahoraBatido;
-    }
-
-    public void setZanahoraBatido(double zanahoraBatido) {
-        this.zanahoraBatido = zanahoraBatido;
-    }
-
-    public double getRalladuraLimon() {
-        return ralladuraLimon;
-    }
-
-    public void setRalladuraLimon(double ralladuraLimon) {
-        this.ralladuraLimon = ralladuraLimon;
-    }
-
-    public double getChocolateDelBatido() {
-        return chocolateDelBatido;
-    }
-
-    public void setChocolateDelBatido(double chocolateDelBatido) {
-        this.chocolateDelBatido = chocolateDelBatido;
-    }
-
-    public double getTemperaturaBatido() {
-        return temperaturaBatido;
-    }
-
-    public void setTemperaturaBatido(double temperaturaBatido) {
-        this.temperaturaBatido = temperaturaBatido;
-    }
-
-    public String getPreparacionBatido() {
-        return preparacionBatido;
-    }
-
-    public void setPreparacionBatido(String preparacionBatido) {
-        this.preparacionBatido = preparacionBatido;
-    }
-
-    public String getPorcionadoBatido() {
-        return porcionadoBatido;
-    }
-
-    public void setPorcionadoBatido(String porcionadoBatido) {
-        this.porcionadoBatido = porcionadoBatido;
-    }
-
-    public String getAlmacenamientoProductoFinal() {
-        return almacenamientoProductoFinal;
-    }
-
-    public void setAlmacenamientoProductoFinal(String almacenamientoProductoFinal) {
-        this.almacenamientoProductoFinal = almacenamientoProductoFinal;
-    }
-
-    public List<Ingredientes.Ingrediente> getIngredientesOriginales() {
+    @Override
+    public List<Ingredientes.Ingrediente> getIngredientes() {
         return ingredientesOriginales;
     }
 
-    public void setIngredientesOriginales(List<Ingredientes.Ingrediente> ingredientesOriginales) {
-        this.ingredientesOriginales = ingredientesOriginales;
-    }
-
+    @Override
     public String getInformacion() {
-        return "Nombre: " + nombreDelBatido + "\n" +
-                "Descripción: " + DescripcionDelBatido + "\n" +
+        return "Nombre: " + getNombre() + "\n" +
+                "Descripción: " + getDescripcion() + "\n" +
                 "Cantidad de Grasa / Aceite: " + medioGrasoDelBatido + "\n" +
                 "Cantidad de Huevos: " + huevosDelBatido + "\n" +
                 "Cantidad de Esencia: " + esenciaDelBatido + "\n" +
-                "Cantidad de Azúcar: " + esenciaDelBatido + "\n" +
+                "Cantidad de Azúcar: " + azucarDelBatido + "\n" +
                 "Cantidad de Harina: " + harinaDelBatido + "\n" +
-                "Cantidad de polvo para hornear: " + polvoParaHornearDelBatido + "\n" +
-                "Cantidad de gramos de leche: " + lecheBatido + "\n" +
-                "Cantidad de Limones: " + limonBatido + "\n" +
-                "Cantidad de limones rayados: " + ralladuraLimon + "\n" +
-                "Cantidad de gramos de chocolate: " + chocolateDelBatido + "\n" +
-                "Cantidad de gramos de zanahoria: " + zanahoraBatido + "\n" +
-                "Temperaturas: " + temperaturaBatido + "\n" +
+                "Cantidad de Polvo para Hornear: " + polvoParaHornearDelBatido + "\n" +
+                "Cantidad de Leche: " + lecheBatido + "\n" +
+                "Cantidad de Limón: " + limonBatido + "\n" +
+                "Cantidad de Zanahoria: " + zanahoriaBatido + "\n" +
+                "Cantidad de Ralladura de Limón: " + ralladuraLimon + "\n" +
+                "Cantidad de Chocolate: " + chocolateDelBatido + "\n" +
+                "Temperatura: " + temperaturaBatido + "\n" +
+                "Preparación: " + preparacionBatido + "\n" +
                 "Porcionado: " + porcionadoBatido + "\n" +
                 "Almacenamiento: " + almacenamientoProductoFinal;
     }
 
+    @Override
     public List<Ingredientes.Ingrediente> getIngredientesAjustados(double cantidadSeleccionada) {
         List<Ingredientes.Ingrediente> ingredientesAjustados = new ArrayList<>();
 
-        if (ingredientesOriginales == null || ingredientesOriginales.isEmpty()) {
-            Log.w("RecetaBatidos", "getIngredientesAjustados: Lista de ingredientes originales está vacía o nula");
-            return ingredientesAjustados; // Devuelve una lista vacía si no hay ingredientes originales
+        if (cantidadOriginal == 0) {
+            Log.w("RecetaBatidos", "Cantidad original es cero, ajuste no es posible.");
+            return ingredientesAjustados;
         }
 
         for (Ingredientes.Ingrediente ingrediente : ingredientesOriginales) {
-            double cantidadAjustada = (ingrediente.getCantidad() * cantidadSeleccionada);
+            double cantidadAjustada = (ingrediente.getCantidad() * cantidadSeleccionada) / cantidadOriginal;
             ingredientesAjustados.add(new Ingredientes.Ingrediente(ingrediente.getNombre(), cantidadAjustada));
             Log.d("RecetaBatidos", "Ingrediente ajustado: " + ingrediente.getNombre() + " - Cantidad ajustada: " + cantidadAjustada);
         }
@@ -233,6 +125,80 @@ public class RecetaBatidos {
         return ingredientesAjustados;
     }
 
+    // Getters y Setters
+    public void setNombreDelBatido(String nombreDelBatido) {
+        this.nombreDelBatido = nombreDelBatido;
+    }
 
+    public void setDescripcionDelBatido(String descripcionDelBatido) {
+        this.descripcionDelBatido = descripcionDelBatido;
+    }
 
+    public void setAzucarDelBatido(double azucarDelBatido) {
+        this.azucarDelBatido = azucarDelBatido;
+    }
+
+    public void setMedioGrasoDelBatido(double medioGrasoDelBatido) {
+        this.medioGrasoDelBatido = medioGrasoDelBatido;
+    }
+
+    public void setEsenciaDelBatido(double esenciaDelBatido) {
+        this.esenciaDelBatido = esenciaDelBatido;
+    }
+
+    public void setHuevosDelBatido(double huevosDelBatido) {
+        this.huevosDelBatido = huevosDelBatido;
+    }
+
+    public void setHarinaDelBatido(double harinaDelBatido) {
+        this.harinaDelBatido = harinaDelBatido;
+    }
+
+    public void setPolvoParaHornearDelBatido(double polvoParaHornearDelBatido) {
+        this.polvoParaHornearDelBatido = polvoParaHornearDelBatido;
+    }
+
+    public void setLecheBatido(double lecheBatido) {
+        this.lecheBatido = lecheBatido;
+    }
+
+    public void setLimonBatido(double limonBatido) {
+        this.limonBatido = limonBatido;
+    }
+
+    public void setZanahoriaBatido(double zanahoriaBatido) {
+        this.zanahoriaBatido = zanahoriaBatido;
+    }
+
+    public void setRalladuraLimon(double ralladuraLimon) {
+        this.ralladuraLimon = ralladuraLimon;
+    }
+
+    public void setChocolateDelBatido(double chocolateDelBatido) {
+        this.chocolateDelBatido = chocolateDelBatido;
+    }
+
+    public void setTemperaturaBatido(double temperaturaBatido) {
+        this.temperaturaBatido = temperaturaBatido;
+    }
+
+    public void setPreparacionBatido(String preparacionBatido) {
+        this.preparacionBatido = preparacionBatido;
+    }
+
+    public void setAlmacenamientoProductoFinal(String almacenamientoProductoFinal) {
+        this.almacenamientoProductoFinal = almacenamientoProductoFinal;
+    }
+
+    public void setPorcionadoBatido(String porcionadoBatido) {
+        this.porcionadoBatido = porcionadoBatido;
+    }
+
+    public void setCantidadOriginal(double cantidadOriginal) {
+        this.cantidadOriginal = cantidadOriginal;
+    }
+
+    public void setIngredientesOriginales(List<Ingredientes.Ingrediente> ingredientesOriginales) {
+        this.ingredientesOriginales = ingredientesOriginales != null ? ingredientesOriginales : new ArrayList<>();
+    }
 }
