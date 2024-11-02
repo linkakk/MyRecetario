@@ -14,17 +14,20 @@ public class RecetaGalletas {
     private double cantidadLimonesGalleta;
     private double cantidadChocolateGalleta;
     private String preparacionGalletas;
-    private double temperaturaGalletas;
+    private String temperaturaGalletas;
     private double porcionadoGalletas;
     private double feculaDeMaiz;
     private double polvoParaHornear;
     private String almacenamientoGalletas;
     private List<Ingredientes.Ingrediente> ingredientesOriginales;
 
+    public RecetaGalletas() {
+    }
+
     public RecetaGalletas(String nombreGalleta, String descripcionGalleta, double cantidadHuevosGalleta,
                           double cantidadESenciaGalleta, double cantidadAzucarGalleta, double cantidadMargarinaGalleta,
                           double cantidadHarinaGalleta, double cantidadLimonesGalleta, double cantidadChocolateGalleta,
-                          String preparacionGalletas, double temperaturaGalletas, double porcionadoGalletas,
+                          String preparacionGalletas, String temperaturaGalletas, double porcionadoGalletas,
                           double feculaDeMaiz, double polvoParaHornear, String almacenamientoGalletas,
                           List<Ingredientes.Ingrediente> ingredientesOriginales) {
         this.nombreGalleta = nombreGalleta;
@@ -125,11 +128,11 @@ public class RecetaGalletas {
         this.preparacionGalletas = preparacionGalletas;
     }
 
-    public double getTemperaturaGalletas() {
+    public String getTemperaturaGalletas() {
         return temperaturaGalletas;
     }
 
-    public void setTemperaturaGalletas(double temperaturaGalletas) {
+    public void setTemperaturaGalletas(String temperaturaGalletas) {
         this.temperaturaGalletas = temperaturaGalletas;
     }
 

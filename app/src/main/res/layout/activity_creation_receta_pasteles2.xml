@@ -213,7 +213,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
                     android:imeOptions="actionNext"
-                    android:inputType="number"
+                    android:inputType="textMultiLine"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:background="@color/white" />

@@ -77,7 +77,6 @@ public class CreationRecetaPasteles extends AppCompatActivity {
             double cantidadMargarina = margarina.isEmpty() ? 0 : Double.parseDouble(margarina);
             double cantidadHarina = harina.isEmpty() ? 0 : Double.parseDouble(harina);
             double cantidadVitina = vitina.isEmpty() ? 0 : Double.parseDouble(vitina);
-            double temperaturaHorno = temperatura.isEmpty() ? 0 : Double.parseDouble(temperatura);
 
             Log.d("CreationRecetaPasteles", "Valores capturados correctamente.");
 
@@ -102,7 +101,7 @@ public class CreationRecetaPasteles extends AppCompatActivity {
                     cantidadMargarina,
                     cantidadHarina,
                     cantidadVitina,
-                    temperaturaHorno,
+                    temperatura,
                     preparacion,
                     porcionado,
                     almacenamiento,

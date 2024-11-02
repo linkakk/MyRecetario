@@ -78,7 +78,6 @@ public class CreationRecetaGalletas extends AppCompatActivity {
         double cantidadChocolate = chocolate.isEmpty() ? 0 : Double.parseDouble(chocolate);
         double feculaMaiz = fecula.isEmpty() ? 0 : Double.parseDouble(fecula);
         double polvoHornearCant = polvoParaHornear.isEmpty() ? 0 : Double.parseDouble(polvoParaHornear);
-        double temperaturaHorno = temperatura.isEmpty() ? 0 : Double.parseDouble(temperatura);
         double pesoUnidad = porcionado.isEmpty() ? 0 : Double.parseDouble(porcionado);
 
         // Log de todos los valores capturados para verificación
@@ -94,7 +93,7 @@ public class CreationRecetaGalletas extends AppCompatActivity {
                 ", Limones = " + cantidadLimones +
                 ", Chocolate = " + cantidadChocolate +
                 ", Preparación = " + preparacion +
-                ", Temperatura = " + temperaturaHorno +
+                ", Temperatura = " + temperatura +
                 ", Porcionado = " + pesoUnidad +
                 ", Almacenamiento = " + almacenamiento);
 
@@ -112,7 +111,7 @@ public class CreationRecetaGalletas extends AppCompatActivity {
 
         RecetaGalletas recetaGalletas = new RecetaGalletas(
                 nombre, descripcion, cantidadHuevos, cantidadEsencia, cantidadAzucar, cantidadMargarina,
-                cantidadHarina, cantidadLimones, cantidadChocolate, preparacion, temperaturaHorno,
+                cantidadHarina, cantidadLimones, cantidadChocolate, preparacion, temperatura,
                 pesoUnidad, feculaMaiz, polvoHornearCant, almacenamiento, listaIngredientes
         );
 

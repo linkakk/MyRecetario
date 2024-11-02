@@ -1,13 +1,12 @@
 package com.example.mi.primer.myrecetario;
 
 import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecetaBatidos {
     private String nombreDelBatido;
-    private String DescripcionDelBatido;
+    private String descripcionDelBatido; // Cambiado a minúscula para consistencia
     private double azucarDelBatido;
     private double medioGrasoDelBatido;
     private double esenciaDelBatido;
@@ -16,7 +15,7 @@ public class RecetaBatidos {
     private double polvoParaHornearDelBatido;
     private double lecheBatido;
     private double limonBatido;
-    private double zanahoraBatido;
+    private double zanahoriaBatido; // Corregido error tipográfico
     private double ralladuraLimon;
     private double chocolateDelBatido;
     private double temperaturaBatido;
@@ -25,13 +24,21 @@ public class RecetaBatidos {
     private String porcionadoBatido;
     private List<Ingredientes.Ingrediente> ingredientesOriginales;
 
-
+    // Constructor vacío necesario para Firebase
     public RecetaBatidos() {
+        ingredientesOriginales = new ArrayList<>();
     }
 
-    public RecetaBatidos(String nombreDelBatido, String descripcionDelBatido, double azucarDelBatido, double medioGrasoDelBatido, double esenciaDelBatido, double huevosDelBatido, double harinaDelBatido, double polvoParaHornearDelBatido, double lecheBatido, double limonBatido, double zanahoraBatido, double ralladuraLimon, double chocolateDelBatido, double temperaturaBatido, String preparacionBatido, String almacenamientoProductoFinal,String porcionadoBatido, List<Ingredientes.Ingrediente> ingredientesOriginales) {
+    // Constructor con todos los parámetros
+    public RecetaBatidos(String nombreDelBatido, String descripcionDelBatido, double azucarDelBatido,
+                         double medioGrasoDelBatido, double esenciaDelBatido, double huevosDelBatido,
+                         double harinaDelBatido, double polvoParaHornearDelBatido, double lecheBatido,
+                         double limonBatido, double zanahoriaBatido, double ralladuraLimon,
+                         double chocolateDelBatido, double temperaturaBatido, String preparacionBatido,
+                         String almacenamientoProductoFinal, String porcionadoBatido,
+                         List<Ingredientes.Ingrediente> ingredientesOriginales) {
         this.nombreDelBatido = nombreDelBatido;
-        this.DescripcionDelBatido = descripcionDelBatido;
+        this.descripcionDelBatido = descripcionDelBatido;
         this.azucarDelBatido = azucarDelBatido;
         this.medioGrasoDelBatido = medioGrasoDelBatido;
         this.esenciaDelBatido = esenciaDelBatido;
@@ -40,16 +47,17 @@ public class RecetaBatidos {
         this.polvoParaHornearDelBatido = polvoParaHornearDelBatido;
         this.lecheBatido = lecheBatido;
         this.limonBatido = limonBatido;
-        this.zanahoraBatido = zanahoraBatido;
+        this.zanahoriaBatido = zanahoriaBatido;
         this.ralladuraLimon = ralladuraLimon;
         this.chocolateDelBatido = chocolateDelBatido;
         this.temperaturaBatido = temperaturaBatido;
         this.preparacionBatido = preparacionBatido;
         this.almacenamientoProductoFinal = almacenamientoProductoFinal;
         this.porcionadoBatido = porcionadoBatido;
-        this.ingredientesOriginales = ingredientesOriginales;
+        this.ingredientesOriginales = ingredientesOriginales != null ? ingredientesOriginales : new ArrayList<>();
     }
 
+    // Getters y setters para cada campo
     public String getNombreDelBatido() {
         return nombreDelBatido;
     }
@@ -59,11 +67,11 @@ public class RecetaBatidos {
     }
 
     public String getDescripcionDelBatido() {
-        return DescripcionDelBatido;
+        return descripcionDelBatido;
     }
 
     public void setDescripcionDelBatido(String descripcionDelBatido) {
-        DescripcionDelBatido = descripcionDelBatido;
+        this.descripcionDelBatido = descripcionDelBatido;
     }
 
     public double getAzucarDelBatido() {
@@ -130,15 +138,12 @@ public class RecetaBatidos {
         this.limonBatido = limonBatido;
     }
 
-
-
-
-    public double getZanahoraBatido() {
-        return zanahoraBatido;
+    public double getZanahoriaBatido() {
+        return zanahoriaBatido;
     }
 
-    public void setZanahoraBatido(double zanahoraBatido) {
-        this.zanahoraBatido = zanahoraBatido;
+    public void setZanahoriaBatido(double zanahoriaBatido) {
+        this.zanahoriaBatido = zanahoriaBatido;
     }
 
     public double getRalladuraLimon() {
@@ -173,20 +178,20 @@ public class RecetaBatidos {
         this.preparacionBatido = preparacionBatido;
     }
 
-    public String getPorcionadoBatido() {
-        return porcionadoBatido;
-    }
-
-    public void setPorcionadoBatido(String porcionadoBatido) {
-        this.porcionadoBatido = porcionadoBatido;
-    }
-
     public String getAlmacenamientoProductoFinal() {
         return almacenamientoProductoFinal;
     }
 
     public void setAlmacenamientoProductoFinal(String almacenamientoProductoFinal) {
         this.almacenamientoProductoFinal = almacenamientoProductoFinal;
+    }
+
+    public String getPorcionadoBatido() {
+        return porcionadoBatido;
+    }
+
+    public void setPorcionadoBatido(String porcionadoBatido) {
+        this.porcionadoBatido = porcionadoBatido;
     }
 
     public List<Ingredientes.Ingrediente> getIngredientesOriginales() {
@@ -197,22 +202,24 @@ public class RecetaBatidos {
         this.ingredientesOriginales = ingredientesOriginales;
     }
 
+    // Método para mostrar la información general
     public String getInformacion() {
         return "Nombre: " + nombreDelBatido + "\n" +
-                "Descripción: " + DescripcionDelBatido + "\n" +
+                "Descripción: " + descripcionDelBatido + "\n" +
                 "Cantidad de Grasa / Aceite: " + medioGrasoDelBatido + "\n" +
                 "Cantidad de Huevos: " + huevosDelBatido + "\n" +
                 "Cantidad de Esencia: " + esenciaDelBatido + "\n" +
-                "Cantidad de Azúcar: " + esenciaDelBatido + "\n" +
+                "Cantidad de Azúcar: " + azucarDelBatido + "\n" +
                 "Cantidad de Harina: " + harinaDelBatido + "\n" +
-                "Cantidad de polvo para hornear: " + polvoParaHornearDelBatido + "\n" +
-                "Cantidad de gramos de leche: " + lecheBatido + "\n" +
+                "Cantidad de Polvo para Hornear: " + polvoParaHornearDelBatido + "\n" +
+                "Cantidad de Leche: " + lecheBatido + "\n" +
                 "Cantidad de Limones: " + limonBatido + "\n" +
-                "Cantidad de limones rayados: " + ralladuraLimon + "\n" +
-                "Cantidad de gramos de chocolate: " + chocolateDelBatido + "\n" +
-                "Cantidad de gramos de zanahoria: " + zanahoraBatido + "\n" +
-                "Temperaturas: " + temperaturaBatido + "\n" +
+                "Cantidad de Ralladura de Limón: " + ralladuraLimon + "\n" +
+                "Cantidad de Chocolate: " + chocolateDelBatido + "\n" +
+                "Cantidad de Zanahoria: " + zanahoriaBatido + "\n"+
+                "Temperatura: " + temperaturaBatido + "\n" +
                 "Porcionado: " + porcionadoBatido + "\n" +
+                "Preparacion batido: " + preparacionBatido + "\n" +
                 "Almacenamiento: " + almacenamientoProductoFinal;
     }
 
@@ -232,7 +239,4 @@ public class RecetaBatidos {
 
         return ingredientesAjustados;
     }
-
-
-
 }

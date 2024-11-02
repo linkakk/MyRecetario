@@ -15,7 +15,7 @@ public class RecetaPastel {
     private double cantidadGramosMargarina;
     private double cantidadGramosHarina;
     private double cantidadGramosVitina;
-    private double temperaturaPastel;
+    private String temperaturaPastel;
     private String preparacionPastel;
     private String porcionadoPastel;
     private String almacenamientoPastel;
@@ -25,7 +25,7 @@ public class RecetaPastel {
     // Constructor completo
     public RecetaPastel(String nombrePastel, String descripcionPastel, double cantidadDeAgua, double cantidadEsencia,
                         double cantidadGramosAzucar, double cantidadGramosSal, double cantidadGramosMargarina,
-                        double cantidadGramosHarina, double cantidadGramosVitina, double temperaturaPastel,
+                        double cantidadGramosHarina, double cantidadGramosVitina, String temperaturaPastel,
                         String preparacionPastel, String porcionadoPastel, String almacenamientoPastel,
                         List<Ingredientes.Ingrediente> ingredientesOriginales) {
         this.nombrePastel = nombrePastel;
@@ -66,8 +66,8 @@ public class RecetaPastel {
     public void setCantidadGramosHarina(double cantidadGramosHarina) { this.cantidadGramosHarina = cantidadGramosHarina; }
     public double getCantidadGramosVitina() { return cantidadGramosVitina; }
     public void setCantidadGramosVitina(double cantidadGramosVitina) { this.cantidadGramosVitina = cantidadGramosVitina; }
-    public double getTemperaturaPastel() { return temperaturaPastel; }
-    public void setTemperaturaPastel(double temperaturaPastel) { this.temperaturaPastel = temperaturaPastel; }
+    public String getTemperaturaPastel() { return temperaturaPastel; }
+    public void setTemperaturaPastel(String temperaturaPastel) { this.temperaturaPastel = temperaturaPastel; }
     public String getPreparacionPastel() { return preparacionPastel; }
     public void setPreparacionPastel(String preparacionPastel) { this.preparacionPastel = preparacionPastel; }
     public String getPorcionadoPastel() { return porcionadoPastel; }
