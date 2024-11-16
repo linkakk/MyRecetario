@@ -34,6 +34,12 @@
         <!-- Aquí puedes agregar más TextViews si es necesario para mostrar más información -->
     </ScrollView>
 
+    <Button
+        android:id="@+id/estaeslaprueba"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        tools:ignore="MissingConstraints" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="410dp"

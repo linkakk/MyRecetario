@@ -35,6 +35,7 @@
             android:id="@+id/etLoginUser"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:background="@drawable/fondo_tarea_redondeado"
             android:fontFamily="monospace"
             android:imeOptions="actionNext"
             android:inputType="text"
@@ -58,6 +59,7 @@
             android:id="@+id/etLoginPassword"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:background="@drawable/fondo_tarea_redondeado"
             android:fontFamily="monospace"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
@@ -72,43 +74,18 @@
 
     <!-- Botón de login -->
 
-    <CheckBox
-        android:id="@+id/checkboxRemember"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="68dp"
-        android:background="@color/buttons"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.135"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilLoginPassword" />
-
-    <TextView
-        android:layout_width="266dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginBottom="102dp"
-        android:text="Recordar informacion"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonPrueba"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.111"
-        app:layout_constraintStart_toEndOf="@+id/checkboxRemember"
-        app:layout_constraintTop_toBottomOf="@+id/tilLoginPassword" />
-
     <Button
         android:id="@+id/buttonPrueba"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="156dp"
+        android:text="@string/login"
         android:backgroundTint="@color/buttons"
-        android:text="Login"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.457"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkboxRemember"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/tilLoginPassword"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

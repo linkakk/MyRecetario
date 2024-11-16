@@ -1,0 +1,9 @@
+<!-- res/values/arrays.xml -->
+<resources>
+    <string-array name="listas">
+        <item>Lista 1</item>
+        <item>Lista 2</item>
+        <item>Lista 3</item>
+        <!-- Añade más ítems si es necesario -->
+    </string-array>
+</resources>

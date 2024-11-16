@@ -59,17 +59,12 @@ public class WelcomeSession extends AppCompatActivity {
         resultadoBusqueda = findViewById(R.id.resultadoBusqueda);
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        spinnerAmount = findViewById(R.id.spinnerAmount);
 
         configureBottomNavigationView();
 
         recipes = new ArrayList<>();
         filteredRecipes = new ArrayList<>();
-
-        spinnerAmount = findViewById(R.id.spinnerAmount);
-        String[] cantidades = new String[]{"8", "12", "15", "16", "18", "20"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cantidades);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerAmount.setAdapter(adapter);
 
         configurarRecyclerView();
 
@@ -112,7 +107,6 @@ public class WelcomeSession extends AppCompatActivity {
         recipeAdapter = new RecipeAdapter(filteredRecipes, cantidadSeleccionada);
         recyclerView.setAdapter(recipeAdapter);
 
-        // Oculta el RecyclerView y muestra el mensaje inicialmente
         recyclerView.setVisibility(View.GONE);
         resultadoBusqueda.setVisibility(View.VISIBLE);
         resultadoBusqueda.setText("Escribe algo para buscar recetas");
@@ -137,10 +131,9 @@ public class WelcomeSession extends AppCompatActivity {
                         recipes.add(recipe);
                     }
                 }
-
                 nodeCount++;
                 if (nodeCount == totalNodes) {
-                    filteredRecipes.clear(); // Asegura que `filteredRecipes` está vacío inicialmente
+                    filteredRecipes.clear();
                     recipeAdapter.notifyDataSetChanged();
                 }
             }
@@ -152,6 +145,7 @@ public class WelcomeSession extends AppCompatActivity {
         });
     }
 
+    // Dentro de la clase WelcomeSession
     private void filterRecipes(String query) {
         filteredRecipes.clear();
 
@@ -159,27 +153,32 @@ public class WelcomeSession extends AppCompatActivity {
             resultadoBusqueda.setVisibility(View.VISIBLE);
             resultadoBusqueda.setText("Escribe algo para buscar recetas");
             recyclerView.setVisibility(View.GONE);
+            ocultarSpinner(); // Ocultar el Spinner si no hay búsqueda activa
         } else {
             for (Object recipe : recipes) {
                 if (recipe instanceof RecetaMasa) {
                     String nombreMasa = ((RecetaMasa) recipe).getNombreDeLaMasa();
                     if (nombreMasa != null && nombreMasa.toLowerCase().contains(query.toLowerCase())) {
                         filteredRecipes.add(recipe);
-                    }
-                } else if (recipe instanceof RecetaBatidos) {
-                    String nombreBatido = ((RecetaBatidos) recipe).getNombreDelBatido();
-                    if (nombreBatido != null && nombreBatido.toLowerCase().contains(query.toLowerCase())) {
-                        filteredRecipes.add(recipe);
-                    }
-                } else if (recipe instanceof RecetaGalletas) {
-                    String nombreGalleta = ((RecetaGalletas) recipe).getNombreGalleta();
-                    if (nombreGalleta != null && nombreGalleta.toLowerCase().contains(query.toLowerCase())) {
-                        filteredRecipes.add(recipe);
+                        configurarSpinnerParaPanes(); // Configura el Spinner para panes
                     }
                 } else if (recipe instanceof RecetaPastel) {
                     String nombrePastel = ((RecetaPastel) recipe).getNombrePastel();
                     if (nombrePastel != null && nombrePastel.toLowerCase().contains(query.toLowerCase())) {
                         filteredRecipes.add(recipe);
+                        configurarSpinnerParaPasteles(); // Configura el Spinner para pasteles
+                    }
+                } else if (recipe instanceof RecetaBatidos) {
+                    String nombreBatido = ((RecetaBatidos) recipe).getNombreDelBatido();
+                    if (nombreBatido != null && nombreBatido.toLowerCase().contains(query.toLowerCase())) {
+                        filteredRecipes.add(recipe);
+                        ocultarSpinner(); // Oculta el Spinner para batidos
+                    }
+                } else if (recipe instanceof RecetaGalletas) {
+                    String nombreGalleta = ((RecetaGalletas) recipe).getNombreGalleta();
+                    if (nombreGalleta != null && nombreGalleta.toLowerCase().contains(query.toLowerCase())) {
+                        filteredRecipes.add(recipe);
+                        ocultarSpinner(); // Oculta el Spinner para galletas
                     }
                 }
             }
@@ -193,25 +192,51 @@ public class WelcomeSession extends AppCompatActivity {
                 recyclerView.setVisibility(View.VISIBLE);
             }
         }
+
         recipeAdapter.notifyDataSetChanged();
     }
+
+    private void configurarSpinnerParaPanes() {
+        spinnerAmount.setVisibility(View.VISIBLE);
+        String[] cantidadesPanes = new String[]{"8", "12", "15", "16", "18", "20"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cantidadesPanes);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAmount.setAdapter(adapter);
+    }
+
+    private void configurarSpinnerParaPasteles() {
+        spinnerAmount.setVisibility(View.VISIBLE);
+        String[] cantidadesPasteles = new String[]{"1", "2", "4"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cantidadesPasteles);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAmount.setAdapter(adapter);
+    }
+
+    private void ocultarSpinner() {
+        spinnerAmount.setVisibility(View.GONE);
+    }
+
 
     private void ajustarIngredientes(double cantidadSeleccionada) {
         for (Object recipe : filteredRecipes) {
             if (recipe instanceof RecetaMasa) {
-                RecetaMasa recetaMasa = (RecetaMasa) recipe;
-                recetaMasa.getIngredientesAjustados(cantidadSeleccionada);
+                ((RecetaMasa) recipe).getIngredientesAjustados(cantidadSeleccionada);
             } else if (recipe instanceof RecetaBatidos) {
-                RecetaBatidos recetaBatidos = (RecetaBatidos) recipe;
-                recetaBatidos.getIngredientesAjustados(cantidadSeleccionada);
+                ((RecetaBatidos) recipe).getIngredientesAjustados(cantidadSeleccionada);
             }
         }
         recipeAdapter.notifyDataSetChanged();
     }
 
     public double obtenerCantidadSeleccionada() {
-        return Double.parseDouble(spinnerAmount.getSelectedItem().toString());
+        if (spinnerAmount != null && spinnerAmount.getVisibility() == View.VISIBLE && spinnerAmount.getSelectedItem() != null) {
+            return Double.parseDouble(spinnerAmount.getSelectedItem().toString());
+        } else {
+            return 1.0; // Valor predeterminado si el Spinner no está visible o no tiene selección
+        }
     }
+
+
 
     private void configureBottomNavigationView() {
         bottomNavigationView.getMenu().findItem(R.id.navigation_search).setOnMenuItemClickListener(item -> {
@@ -233,8 +258,15 @@ public class WelcomeSession extends AppCompatActivity {
             logout();
             return true;
         });
+        bottomNavigationView.getMenu().findItem(R.id.navigation_tareas).setOnMenuItemClickListener(item -> {
+            btnTareas();
+            return true;
+        });
     }
 
+    private void btnTareas(){
+        startActivity(new Intent(this, ListaDeTareas.class));
+    }
     private void logout() {
         startActivity(new Intent(this, MainActivity.class));
         finish();

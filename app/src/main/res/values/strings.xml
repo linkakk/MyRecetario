@@ -13,6 +13,7 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="login">Login</string>
     <!-- Creation User -->
     <string name="name">Nombre</string>
     <string name="lastName">Apellido</string>
@@ -66,7 +67,12 @@
     <string name="Info">Informacion no encontrada</string>
     <string name="amount">Elija la cantidad que preparara</string>
     <string name="title_activity_creation_receta_pasteles">CreationRecetaPasteles</string>
-    <!-- para usar despues
-     -->
+    <string name="delete">Eliminar</string>
+    <!-- Lista de tareas-->
 
+    <string name="tareas">Lista de tareas</string>
+    <string name="selectList">Seleccionar lista</string>
+    <string name="nuevaTarea">Nueva tarea</string>
+    <string name="fecha">Fecha sin fijar</string>
+    <string name="fechaLimite">Fecha limite</string>
 </resources>

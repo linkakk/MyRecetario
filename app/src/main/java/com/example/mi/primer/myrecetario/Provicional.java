@@ -1,8 +1,10 @@
 package com.example.mi.primer.myrecetario;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,16 +26,23 @@ public class Provicional extends AppCompatActivity {
     private RecipeAdapterProvisional recipeAdapter;
     private List<RecetaBatidos> listaDeRecetas;
     private DatabaseReference tortasRef;
+    private Button esteBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provicional);
-
+        esteBtn = findViewById(R.id.estaeslaprueba);
         inicializarVistas();
         configurarRecyclerView();
         inicializarFirebase();
         cargarDatosDeTortas();
+        esteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ir();
+            }
+        });
     }
 
     private void inicializarVistas() {
@@ -88,5 +97,10 @@ public class Provicional extends AppCompatActivity {
             recyclerView.setVisibility(View.VISIBLE);
             recipeAdapter.notifyDataSetChanged();
         }
+    }
+
+    public void ir() {
+        Intent intent = new Intent(this, CreaTuTarea.class);
+        startActivity(intent);
     }
 }

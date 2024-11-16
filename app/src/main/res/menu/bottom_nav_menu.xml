@@ -9,6 +9,10 @@
         android:icon="@drawable/list_svgrepo_com"
         android:title="Productos"/>
     <item
+        android:id="@+id/navigation_tareas"
+        android:icon="@drawable/iconotareas"
+        android:title="Tareas"/>
+    <item
         android:id="@+id/navigation_add"
         android:icon="@drawable/add_square_svgrepo_com"
         android:title="Agregar"/>

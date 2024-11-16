@@ -19,7 +19,8 @@ public class RecetaPastel {
     private String preparacionPastel;
     private String porcionadoPastel;
     private String almacenamientoPastel;
-    private double cantidadOriginal;
+    private double cantidadOriginal = 1; // Valor predeterminado
+
     private List<Ingredientes.Ingrediente> ingredientesOriginales;
 
     // Constructor completo
@@ -45,6 +46,8 @@ public class RecetaPastel {
     }
 
     public RecetaPastel() {
+        this.cantidadOriginal = 1; // Valor predeterminado
+
     }
 
     // Getters y Setters
@@ -84,9 +87,15 @@ public class RecetaPastel {
     // Método para obtener la lista ajustada de ingredientes
     public List<Ingredientes.Ingrediente> getIngredientesAjustados(double cantidadSeleccionada) {
         List<Ingredientes.Ingrediente> ingredienteAjustados = new ArrayList<>();
+
+        // Validar cantidadOriginal
+        if (cantidadOriginal <= 0) {
+            Log.e("RecetaPastel", "Error: cantidadOriginal es 0 o menor. Usando cantidadOriginal = 1.");
+            cantidadOriginal = 1; // Ajuste de emergencia si cantidadOriginal es 0 o menor
+        }
+
         for (Ingredientes.Ingrediente ingrediente : this.ingredientesOriginales) {
-            double cantidadAjustada = this.cantidadOriginal != 0 ?
-                    (ingrediente.getCantidad() * cantidadSeleccionada) / this.cantidadOriginal : 0;
+            double cantidadAjustada = (ingrediente.getCantidad() * cantidadSeleccionada) / this.cantidadOriginal;
             ingredienteAjustados.add(new Ingredientes.Ingrediente(ingrediente.getNombre(), cantidadAjustada));
             Log.d("RecetaPastel", "getIngredientesAjustados: Ingrediente ajustado: " + ingrediente.getNombre() +
                     " - Cantidad original: " + ingrediente.getCantidad() + " - Cantidad ajustada: " + cantidadAjustada);
