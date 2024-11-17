@@ -132,7 +132,8 @@ public class CreationReceta extends AppCompatActivity {
                 listaIngredientes // Pasar la lista de ingredientes
         );
 
-        // Guardar la receta en Firebase
+        // Gu
+        // ardar la receta en Firebase
         databaseRecetas.push().setValue(recetaMasa).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(this, "Receta guardada correctamente", Toast.LENGTH_LONG).show();
