@@ -83,9 +83,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
-            recipeTitle = itemView.findViewById(R.id.text1);
-            recipeInfo = itemView.findViewById(R.id.text2);
-            recyclerViewIngredients = itemView.findViewById(R.id.ingredientsRecyclerView);
+            recipeTitle = itemView.findViewById(R.id.recipeName);
+            recipeInfo = itemView.findViewById(R.id.recipeInfo);
+            recyclerViewIngredients = itemView.findViewById(R.id.recyclerView_allRecipes);
             recyclerViewIngredients.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
             ingredientAdapter = new IngredientAdapter(new ArrayList<>());
             recyclerViewIngredients.setAdapter(ingredientAdapter);

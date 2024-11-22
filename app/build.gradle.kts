@@ -34,6 +34,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        dataBinding = true // Habilita Data Binding aquí
     }
 }
 
@@ -57,6 +58,7 @@ dependencies {
 
     // Google Play Services Auth library
     implementation("com.google.android.gms:play-services-auth:21.0.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
 
     // Testing dependencies
     testImplementation("junit:junit:4.13.2")

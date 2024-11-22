@@ -1,20 +1,21 @@
 package com.example.mi.primer.myrecetario;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.FirebaseDatabase; // Asegúrate de tener este import
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,71 +25,85 @@ public class Provicional extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TextView resultadoBusqueda;
     private RecipeAdapterProvisional recipeAdapter;
-    private List<RecetaBatidos> listaDeRecetas;
-    private DatabaseReference tortasRef;
-    private Button esteBtn;
+    private List<Object> recipes;
+    private DatabaseReference recipesRef, galletasRef, pastelesRef, tortasRef;
+    private int nodeCount = 0;
+    private final int totalNodes = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provicional);
-        esteBtn = findViewById(R.id.estaeslaprueba);
+
         inicializarVistas();
         configurarRecyclerView();
         inicializarFirebase();
-        cargarDatosDeTortas();
-        esteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ir();
-            }
-        });
+        cargarTodasLasRecetas();
     }
 
     private void inicializarVistas() {
         resultadoBusqueda = findViewById(R.id.resultadoBusquedaPp);
-        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recyclerView_allRecipes);
     }
 
     private void configurarRecyclerView() {
-        listaDeRecetas = new ArrayList<>();
-        recipeAdapter = new RecipeAdapterProvisional(listaDeRecetas);
+        recipes = new ArrayList<>();
+        recipeAdapter = new RecipeAdapterProvisional(recipes);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recipeAdapter);
     }
 
     private void inicializarFirebase() {
+        recipesRef = FirebaseDatabase.getInstance().getReference("recetas");
+        galletasRef = FirebaseDatabase.getInstance().getReference("Galletas");
+        pastelesRef = FirebaseDatabase.getInstance().getReference("Pasteles");
         tortasRef = FirebaseDatabase.getInstance().getReference("Tortas");
     }
 
-    private void cargarDatosDeTortas() {
-        tortasRef.addValueEventListener(new ValueEventListener() {
+    private void cargarTodasLasRecetas() {
+        recipes.clear();
+        nodeCount = 0;
+
+        cargarDatosDeNodo(recipesRef, RecetaMasa.class);
+        cargarDatosDeNodo(galletasRef, RecetaGalletas.class);
+        cargarDatosDeNodo(pastelesRef, RecetaPastel.class);
+        cargarDatosDeNodo(tortasRef, RecetaBatidos.class);
+    }
+
+    private <T> void cargarDatosDeNodo(DatabaseReference ref, Class<T> recetaClase) {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listaDeRecetas.clear();
-                Log.d(TAG, "onDataChange: Recibido snapshot con " + snapshot.getChildrenCount() + " elementos.");
+                Log.d(TAG, "onDataChange: Recibido snapshot con " + snapshot.getChildrenCount() + " elementos de nodo " + ref.getKey());
                 for (DataSnapshot recetaSnapshot : snapshot.getChildren()) {
-                    RecetaBatidos receta = recetaSnapshot.getValue(RecetaBatidos.class);
+                    T receta = recetaSnapshot.getValue(recetaClase);
                     if (receta != null) {
-                        Log.d(TAG, "Receta cargada: " + receta.getNombreDelBatido());
-                        listaDeRecetas.add(receta);
+                        recipes.add(receta);
+                        Log.d(TAG, "Receta cargada: " + obtenerNombreReceta(receta));
                     } else {
-                        Log.w(TAG, "Receta nula en snapshot");
+                        Log.w(TAG, "Receta nula en snapshot del nodo " + ref.getKey());
                     }
                 }
-                actualizarUI();
+                nodeCount++;
+                if (nodeCount == totalNodes) {
+                    actualizarUI();
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e(TAG, "Error al cargar recetas de Firebase: " + error.getMessage());
+                Log.e(TAG, "Error al cargar recetas de Firebase del nodo " + ref.getKey() + ": " + error.getMessage());
+                nodeCount++;
+                if (nodeCount == totalNodes) {
+                    actualizarUI();
+                }
             }
         });
     }
 
     private void actualizarUI() {
-        Log.d(TAG, "actualizarUI: Total de recetas en la lista: " + listaDeRecetas.size());
-        if (listaDeRecetas.isEmpty()) {
+        Log.d(TAG, "actualizarUI: Total de recetas en la lista: " + recipes.size());
+        if (recipes.isEmpty()) {
             resultadoBusqueda.setVisibility(View.VISIBLE);
             resultadoBusqueda.setText("No se encontraron recetas.");
             recyclerView.setVisibility(View.GONE);
@@ -99,8 +114,17 @@ public class Provicional extends AppCompatActivity {
         }
     }
 
-    public void ir() {
-        Intent intent = new Intent(this, CreaTuTarea.class);
-        startActivity(intent);
+    private String obtenerNombreReceta(Object receta) {
+        if (receta instanceof RecetaMasa) {
+            return ((RecetaMasa) receta).getNombreDeLaMasa();
+        } else if (receta instanceof RecetaGalletas) {
+            return ((RecetaGalletas) receta).getNombreGalleta();
+        } else if (receta instanceof RecetaPastel) {
+            return ((RecetaPastel) receta).getNombrePastel();
+        } else if (receta instanceof RecetaBatidos) {
+            return ((RecetaBatidos) receta).getNombreDelBatido();
+        } else {
+            return "Receta sin nombre";
+        }
     }
 }

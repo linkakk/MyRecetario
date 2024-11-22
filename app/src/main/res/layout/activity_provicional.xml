@@ -1,53 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fondoPrincipal"
     tools:context=".Provicional">
 
-
-
-    <!-- ScrollView para mostrar resultados -->
-
-    <!-- RecyclerView para mostrar recetas -->
-
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-29dp"
-        tools:layout_editor_absoluteY="112dp">
+    <!-- Header con el título "Todas las Recetas" -->
+    <LinearLayout
+        android:id="@+id/linearLayoutHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/buttons"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
-            android:id="@+id/resultadoBusquedaPp"
-            android:layout_width="match_parent"
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:text="@string/Info"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:visibility="gone" />
+            android:text="@string/allRecipes"
+            android:textSize="40sp"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 
-        <!-- Aquí puedes agregar más TextViews si es necesario para mostrar más información -->
-    </ScrollView>
-
-    <Button
-        android:id="@+id/estaeslaprueba"
+    <!-- TextView para mostrar mensajes al usuario -->
+    <TextView
+        android:id="@+id/resultadoBusquedaPp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login"
-        tools:ignore="MissingConstraints" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="410dp"
-        android:layout_height="722dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:text="Cargando recetas..."
+        android:textSize="18sp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutHeader"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- RecyclerView para mostrar las recetas -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_allRecipes"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutHeader"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

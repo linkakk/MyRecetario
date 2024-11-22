@@ -75,4 +75,7 @@
     <string name="nuevaTarea">Nueva tarea</string>
     <string name="fecha">Fecha sin fijar</string>
     <string name="fechaLimite">Fecha limite</string>
+    
+    <!-- Todas las recetas -->
+    <string name="allRecipes">Todas las recetas</string>
 </resources>
