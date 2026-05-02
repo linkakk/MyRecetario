@@ -1,65 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="8dp">
 
-    <!-- Contenido del elemento de la tarea -->
-    <LinearLayout
+    <!-- Nombre de la receta -->
+    <TextView
+        android:id="@+id/recipeName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="18dp">
+        android:text="Nombre de la receta"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:paddingBottom="4dp" />
 
-        <!-- Contenedor de los TextViews -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingEnd="16dp">
-
-            <!-- Descripción de la tarea -->
-            <TextView
-                android:id="@+id/txtNombreTarea"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nombre de la Tarea"
-                android:textSize="18sp"
-                android:textColor="#000000"
-                android:paddingBottom="4dp"
-                android:ellipsize="end"/>
-
-            <!-- Fecha límite de la tarea -->
-            <TextView
-                android:id="@+id/txtFechaLimiteTarea"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Fecha límite: Sin fecha"
-                android:textSize="14sp"
-                android:textColor="#666666"
-                android:paddingBottom="4dp"
-                android:maxLines="1"
-                android:ellipsize="end"/>
-
-        </LinearLayout>
-
-        <!-- Botón para eliminar la tarea -->
-        <ImageButton
-            android:id="@+id/btnEliminarTarea"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Eliminar tarea"
-            android:src="@drawable/iconobasura"
-            android:layout_gravity="center_vertical" />
-
-    </LinearLayout>
-
-    <!-- Separador -->
-    <View
+    <!-- Información adicional de la receta -->
+    <TextView
+        android:id="@+id/recipeInfo"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#CCCCCC" />
+        android:layout_height="wrap_content"
+        android:text="Información de la receta"
+        android:textSize="16sp"
+        android:textColor="#333333"
+        android:paddingBottom="4dp" />
+
+    <!-- RecyclerView para los ingredientes -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_allRecipes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
 </LinearLayout>

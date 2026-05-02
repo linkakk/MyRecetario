@@ -149,53 +149,81 @@ public class WelcomeSession extends AppCompatActivity {
     private void filterRecipes(String query) {
         filteredRecipes.clear();
 
-        if (query.isEmpty()) {
+        String queryNormalizada = query == null ? "" : query.trim().toLowerCase();
+
+        if (queryNormalizada.isEmpty()) {
             resultadoBusqueda.setVisibility(View.VISIBLE);
             resultadoBusqueda.setText("Escribe algo para buscar recetas");
             recyclerView.setVisibility(View.GONE);
-            ocultarSpinner(); // Ocultar el Spinner si no hay búsqueda activa
-        } else {
-            for (Object recipe : recipes) {
-                if (recipe instanceof RecetaMasa) {
-                    String nombreMasa = ((RecetaMasa) recipe).getNombreDeLaMasa();
-                    if (nombreMasa != null && nombreMasa.toLowerCase().contains(query.toLowerCase())) {
-                        filteredRecipes.add(recipe);
-                        configurarSpinnerParaPanes(); // Configura el Spinner para panes
-                    }
-                } else if (recipe instanceof RecetaPastel) {
-                    String nombrePastel = ((RecetaPastel) recipe).getNombrePastel();
-                    if (nombrePastel != null && nombrePastel.toLowerCase().contains(query.toLowerCase())) {
-                        filteredRecipes.add(recipe);
-                        configurarSpinnerParaPasteles(); // Configura el Spinner para pasteles
-                    }
-                } else if (recipe instanceof RecetaBatidos) {
-                    String nombreBatido = ((RecetaBatidos) recipe).getNombreDelBatido();
-                    if (nombreBatido != null && nombreBatido.toLowerCase().contains(query.toLowerCase())) {
-                        filteredRecipes.add(recipe);
-                        ocultarSpinner(); // Oculta el Spinner para batidos
-                    }
-                } else if (recipe instanceof RecetaGalletas) {
-                    String nombreGalleta = ((RecetaGalletas) recipe).getNombreGalleta();
-                    if (nombreGalleta != null && nombreGalleta.toLowerCase().contains(query.toLowerCase())) {
-                        filteredRecipes.add(recipe);
-                        ocultarSpinner(); // Oculta el Spinner para galletas
-                    }
+            ocultarSpinner();
+            recipeAdapter.notifyDataSetChanged();
+            return;
+        }
+
+        boolean hayPanes = false;
+        boolean hayPasteles = false;
+        boolean haySoloRecetasSinSpinner = false;
+
+        for (Object recipe : recipes) {
+            if (recipe instanceof RecetaMasa) {
+                RecetaMasa recetaMasa = (RecetaMasa) recipe;
+                String nombreMasa = recetaMasa.getNombreDeLaMasa();
+
+                if (nombreMasa != null && nombreMasa.toLowerCase().contains(queryNormalizada)) {
+                    filteredRecipes.add(recipe);
+                    hayPanes = true;
+                }
+
+            } else if (recipe instanceof RecetaPastel) {
+                RecetaPastel recetaPastel = (RecetaPastel) recipe;
+                String nombrePastel = recetaPastel.getNombrePastel();
+
+                if (nombrePastel != null && nombrePastel.toLowerCase().contains(queryNormalizada)) {
+                    filteredRecipes.add(recipe);
+                    hayPasteles = true;
+                }
+
+            } else if (recipe instanceof RecetaBatidos) {
+                RecetaBatidos recetaBatidos = (RecetaBatidos) recipe;
+                String nombreBatido = recetaBatidos.getNombreDelBatido();
+
+                if (nombreBatido != null && nombreBatido.toLowerCase().contains(queryNormalizada)) {
+                    filteredRecipes.add(recipe);
+                    haySoloRecetasSinSpinner = true;
+                }
+
+            } else if (recipe instanceof RecetaGalletas) {
+                RecetaGalletas recetaGalletas = (RecetaGalletas) recipe;
+                String nombreGalleta = recetaGalletas.getNombreGalleta();
+
+                if (nombreGalleta != null && nombreGalleta.toLowerCase().contains(queryNormalizada)) {
+                    filteredRecipes.add(recipe);
+                    haySoloRecetasSinSpinner = true;
                 }
             }
+        }
 
-            if (filteredRecipes.isEmpty()) {
-                resultadoBusqueda.setVisibility(View.VISIBLE);
-                resultadoBusqueda.setText("No se encontraron recetas para: " + query);
-                recyclerView.setVisibility(View.GONE);
+        if (filteredRecipes.isEmpty()) {
+            resultadoBusqueda.setVisibility(View.VISIBLE);
+            resultadoBusqueda.setText("No se encontraron recetas para: " + query);
+            recyclerView.setVisibility(View.GONE);
+            ocultarSpinner();
+
+        } else {
+            resultadoBusqueda.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+
+            if (hayPanes && !hayPasteles) {
+                configurarSpinnerParaPanes();
+            } else if (hayPasteles && !hayPanes) {
+                configurarSpinnerParaPasteles();
             } else {
-                resultadoBusqueda.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
+                ocultarSpinner();
             }
         }
 
         recipeAdapter.notifyDataSetChanged();
     }
-
     private void configurarSpinnerParaPanes() {
         spinnerAmount.setVisibility(View.VISIBLE);
         String[] cantidadesPanes = new String[]{"8", "12", "15", "16", "18", "20"};
@@ -221,10 +249,15 @@ public class WelcomeSession extends AppCompatActivity {
         for (Object recipe : filteredRecipes) {
             if (recipe instanceof RecetaMasa) {
                 ((RecetaMasa) recipe).getIngredientesAjustados(cantidadSeleccionada);
+
             } else if (recipe instanceof RecetaBatidos) {
                 ((RecetaBatidos) recipe).getIngredientesAjustados(cantidadSeleccionada);
+
+            } else if (recipe instanceof RecetaPastel) {
+                ((RecetaPastel) recipe).getIngredientesAjustados(cantidadSeleccionada);
             }
         }
+
         recipeAdapter.notifyDataSetChanged();
     }
 
